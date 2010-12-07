@@ -1,0 +1,74 @@
+Wykobi Computational Geometry Release Notes
+
+********************************************************************************
+
+[ Version 0.0.4 (12-04-2009) ]
+
+ 00. Various algorithm/routine additions
+     - Create circumcevian triangle
+     - Create circummedial triangle
+     - Create right triangle
+     - Tangent line between circle and point
+     - Closest point on polygon from point
+     - Is right triangle
+     - Make circle from triangle (circumcircle)
+
+ 01. Various bug fixes
+
+ 03. Type changes
+
+ 04. .NET Wykobi demonstration application updates and additions
+
+********************************************************************************
+
+[ Version 0.0.3 (01-05-2007) ]
+
+ 00. Various algorithm additions
+
+ 01. Addition of nD routines
+
+ 02. Addition of .NET Wykobi demonstration application
+
+ 03. Minor bug fixes
+
+********************************************************************************
+
+[ Version 0.0.2 (21-09-2006) ]
+
+ 00. Various algorithm additions
+
+ 01. Convex Hull Algorithms (2D only)
+     - Graham scan
+     - Jarvis march
+     - Melkman
+
+ 02. Minimum Bounding Ball Algorithms
+     - Naive method (2D)
+     - Randomized (2D)
+     - Ritter (2D & 3D)
+
+ 03. Sutherland Hodgman Polygon Clipper
+
+ 04. Isotropic point normalizations (2D & 3D)
+
+ 05. Covariance matrix calculation for point clouds (2D & 3D)
+
+ 06. Ordered polygon from complex self-intersecting polygons (2D)
+
+ 07. Naive group based pairwise intersections
+
+ 08. Axis projection polygon descriptor
+
+ 09. Duplicate removal algorithm
+
+ 10. Matrix calculations (2x2, 3x3 and 4x4)
+
+********************************************************************************
+
+[ Version 0.0.1 (21-07-2006) ]
+
+ 00. Initial Release
+ 01. 2D & 3D Geometric routines
+
+********************************************************************************
+
