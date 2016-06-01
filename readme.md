@@ -2,7 +2,7 @@
 Wykobi is an efficient, robust and simple to use multi-platform 2D/3D
 computational geometry library. Wykobi provides a concise,
 predictable, and deterministic interface for geometric primitives and
-complex geometric routines implementated in C++.
+complex geometric routines implemented in C++.
 
 The design and structure of Wykobi lends itself to easy and seamless
 integration into projects of any scale that require a robust yet
@@ -17,6 +17,10 @@ efficient 2D/3D computational geometry back-end.
 + Microsoft Visual Studio C++ Compiler (7.1+)
 
 
+#### Download
+http://www.wykobi.com
+
+
 #### General Features
 * Pairwise intersections in 2D/3D between - Rays, Segments, Lines, Planes, Triangles, Quadii, Circles, Spheres, Rectangles, Boxes, Polygons, Cubic and Quadratic beziers
 * Point inclusion test - Triangle, Rectangle, Circle, Quadix, Sphere and Convex\Concave Polygon region, In Circle and In Sphere
@@ -26,7 +30,7 @@ efficient 2D/3D computational geometry back-end.
 * Nonsymmetric mirroring 2D/3D (reflection) about an axis or plane - Point, Segment, Line, Triangle, Quadix, Circle, Sphere, Polygon
 * Euclidean, Ley, Manhattan, Chebyshev and inverse Chebyshev pairwise distance - Rays, Segments, Lines, Planes, Triangles, Quadii, Circles, Spheres, Rectangles, Boxes, Cubic and Quadratic beziers
 * Minkowski pairwise sum and differences between - Rays, Segments, Triangles, Quadii, Circles, Spheres, Rectangles, Boxes and Polygons
-* Clipping of segments agains - Rectangles, Triangles, Quadii, Boxes and Circles
+* Clipping of segments against - Rectangles, Triangles, Quadii, Boxes and Circles
 * Area Calculation - Triangle, Quadix, Rectangle, Circle and Polygon
 * Perimeter Calculation - Triangle, Quadix, Rectangle, Circle and Polygon
 * Generate random points within - AABB, Triangle, Quadix, Circle, Pentagon, Hexagon, Heptagon and Octagon
@@ -48,7 +52,7 @@ efficient 2D/3D computational geometry back-end.
 #### Algorithms
 * Convex Hull - Graham scan, Jarvis march, Melkman
 * Minimum Bounding Ball - Randomized, Ritter and naive
-* Polygon Clipping - Sutherland Hodgman, Polygon re-ording
+* Polygon Clipping - Sutherland Hodgman, Polygon reordering
 * Polygon Triangulation - Ear Clipping Algorithm For Simple Polygons
 * Statistical - Isotropic normalization, Covariance matrix, Eigen values and vectors
 * Group Intersections - Naive pairwise intersections
@@ -78,7 +82,7 @@ efficient 2D/3D computational geometry back-end.
 * Incenter
 * Inscribed circle
 * Inner and outer napoleon triangles
-* Inner and outer vecten vecten triangles
+* Inner and outer vecten triangles
 * Inverse Point
 * Inverse Circle and Sphere
 * Isogonal conjugate
