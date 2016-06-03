@@ -1217,11 +1217,11 @@ namespace wykobi
    {
       vector3d<T> diff     = line[0] - triangle[0];
       vector3d<T> line_dir = line[1] - line[0];
-      vector3d<T> edge1    =  triangle[1] - triangle[0];
-      vector3d<T> edge2    =  triangle[2] - triangle[0];
+      vector3d<T> edge1    = triangle[1] - triangle[0];
+      vector3d<T> edge2    = triangle[2] - triangle[0];
       vector3d<T> normal   = edge1 * edge2;
 
-      T denom =  dot_product(normal,line_dir);
+      T denom =  dot_product(line_dir,normal);
       T sign  = 0.0;
 
       if (denom > T(0.0))
@@ -1239,7 +1239,7 @@ namespace wykobi
       T val1 = sign * dot_product(line_dir,(diff * edge2));
       if (greater_than_or_equal(val1,T(0.0)))
       {
-         T val2 = sign * dot_product(line_dir,diff * edge1);
+         T val2 = sign * dot_product(line_dir,edge1 * diff);
          if (greater_than_or_equal(val2,T(0.0)))
          {
             if (val1 + val2 <= denom)
@@ -12352,8 +12352,8 @@ namespace wykobi
    }
 
    template<typename T, typename OutputIterator>
-   inline void generate_random_points(const T& x1, const  T& y1,
-                                      const T& x2, const  T& y2,
+   inline void generate_random_points(const T& x1, const T& y1,
+                                      const T& x2, const T& y2,
                                       const std::size_t& point_count,
                                       OutputIterator out)
    {
@@ -12368,9 +12368,9 @@ namespace wykobi
 
    template<typename T, typename OutputIterator>
    inline void generate_random_points(const T& x1, const T& y1, const T& z1,
-                                     const T& x2, const  T& y2, const T& z2,
-                                     const std::size_t& point_count,
-                                     OutputIterator out)
+                                      const T& x2, const T& y2, const T& z2,
+                                      const std::size_t& point_count,
+                                      OutputIterator out)
    {
       T dx = abs(x2 - x1);
       T dy = abs(y2 - y1);
@@ -12463,7 +12463,7 @@ namespace wykobi
    }
 
    template<typename T>
-   inline void generate_random_object(const T& x1, const  T& y1, const  T& x2, const  T& y2, segment<T,2>& segment)
+   inline void generate_random_object(const T& x1, const T& y1, const T& x2, const T& y2, segment<T,2>& segment)
    {
       T dx = abs(x2 - x1);
       T dy = abs(y2 - y1);
@@ -12479,7 +12479,7 @@ namespace wykobi
    }
 
    template<typename T>
-   inline void generate_random_object(const T& x1, const  T& y1, const  T& x2, const  T& y2, rectangle<T>& rectangle)
+   inline void generate_random_object(const T& x1, const T& y1, const T& x2, const T& y2, rectangle<T>& rectangle)
    {
       T dx = abs(x2 - x1);
       T dy = abs(y2 - y1);
@@ -12509,7 +12509,7 @@ namespace wykobi
    }
 
    template<typename T>
-   inline void generate_random_object(const T& x1, const  T& y1, const  T& x2, const  T& y2, triangle<T,2>& triangle)
+   inline void generate_random_object(const T& x1, const T& y1, const T& x2, const T& y2, triangle<T,2>& triangle)
    {
       T dx = abs(x2 - x1);
       T dy = abs(y2 - y1);
@@ -12525,7 +12525,7 @@ namespace wykobi
    }
 
    template<typename T>
-   inline void generate_random_object(const T& x1, const  T& y1, const  T& x2, const  T& y2, quadix<T,2>& quadix)
+   inline void generate_random_object(const T& x1, const T& y1, const T& x2, const T& y2, quadix<T,2>& quadix)
    {
       T dx = abs(x2 - x1);
       T dy = abs(y2 - y1);
@@ -12541,7 +12541,7 @@ namespace wykobi
    }
 
    template<typename T>
-   inline void generate_random_object(const T& x1, const  T& y1, const  T& x2, const  T& y2, circle<T>& circle)
+   inline void generate_random_object(const T& x1, const T& y1, const T& x2, const T& y2, circle<T>& circle)
    {
       T dx = abs(x2 - x1);
       T dy = abs(y2 - y1);
