@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -34,10 +34,11 @@ namespace wykobi
         Note: Clip boundries must be convex.
       */
 
-      template<typename T>
+      template <typename T>
       struct sutherland_hodgman_polygon_clipper< point2d<T> >
       {
       public:
+
          sutherland_hodgman_polygon_clipper (const rectangle<T>& clip_boundry,
                                              const polygon<T,2>& input_polygon,
                                                    polygon<T,2>& clipped_polygon)
@@ -54,7 +55,7 @@ namespace wykobi
             clipper_engine.clip(input_polygon.begin(),input_polygon.end(),std::back_inserter(clipped_polygon));
          }
 
-         template<typename ClipObject>
+         template <typename ClipObject>
          sutherland_hodgman_polygon_clipper (const ClipObject& clip_boundry,
                                              const polygon<T,2>& input_polygon,
                                                    polygon<T,2>& clipped_polygon)
@@ -66,7 +67,7 @@ namespace wykobi
             if (orientation(clip_boundry[0],clip_boundry[1],clip_boundry[2]) == LeftHandSide)
             {
                std::size_t j = 0;
-               for(std::size_t i = clip_boundry.size() - 1; (0 <= i) && (i < clip_boundry.size()); i--)
+               for (std::size_t i = clip_boundry.size() - 1; (0 <= i) && (i < clip_boundry.size()); i--)
                {
                   clipper_engine.register_edge(clip_boundry[j],clip_boundry[i]);
                   j = i;
@@ -75,7 +76,7 @@ namespace wykobi
             else
             {
                std::size_t j = clip_boundry.size() - 1;
-               for(std::size_t i = 0; i < clip_boundry.size(); ++i)
+               for (std::size_t i = 0; i < clip_boundry.size(); ++i)
                {
                   clipper_engine.register_edge(clip_boundry[j],clip_boundry[i]);
                   j = i;
@@ -86,7 +87,7 @@ namespace wykobi
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct sutherland_hodgman_polygon_clipper_engine< point2d<T> >
       {
       public:
@@ -96,10 +97,11 @@ namespace wykobi
             edge_list.push_back(std::make_pair< point2d<T>,point2d<T> >(point1,point2));
          }
 
-         template<typename InputIterator, typename OutputIterator>
+         template <typename InputIterator, typename OutputIterator>
          void clip(InputIterator begin, InputIterator end, OutputIterator out)
          {
             if (std::distance(begin,end) < 3) return;
+
             if (edge_list.size() < 3) return;
 
             std::vector< point2d<T> > clip_poly1;
@@ -107,10 +109,11 @@ namespace wykobi
 
             std::copy(begin,end,std::back_inserter(clip_poly1));
 
-            for(std::size_t i = 0; i < edge_list.size(); ++i)
+            for (std::size_t i = 0; i < edge_list.size(); ++i)
             {
                point2d<T> point1 = edge_list[i].first;
                point2d<T> point2 = edge_list[i].second;
+
                switch (i & 0x01)
                {
                   case 0 : clip_against_edge(half_plane_edge(point1,point2),clip_poly1,clip_poly2); break;
@@ -129,9 +132,12 @@ namespace wykobi
          class half_plane_edge
          {
          public:
-            half_plane_edge(const point2d<T>& point1, const point2d<T>& point2) : a(point2.y - point1.y),
-                                                                                  b(point1.x - point2.x),
-                                                                                  c(-a * point1.x - b * point1.y) {}
+
+            half_plane_edge(const point2d<T>& point1, const point2d<T>& point2)
+            : a(point2.y - point1.y),
+              b(point1.x - point2.x),
+              c(-a * point1.x - b * point1.y)
+            {}
 
             bool inside_half_plane(const point2d<T>& point) const
             {
@@ -143,11 +149,14 @@ namespace wykobi
                T d = point2.y - point1.y;
                T e = point1.x - point2.x;
                T f = -d * point1.x - e * point1.y;
+
                T ratio = T(1.0) / (e * a - b * d);
+
                return make_point((b * f - e * c) * ratio, (d * c - a * f) * ratio);
             }
 
          private:
+
             T a;
             T b;
             T c;
@@ -159,8 +168,9 @@ namespace wykobi
          {
             if (input_poly.size() < 2)
             {
-               input_poly.clear();
+               input_poly  .clear();
                clipped_poly.clear();
+
                return;
             }
 
@@ -169,6 +179,7 @@ namespace wykobi
             for (typename std::vector< point2d<T> >::iterator it = input_poly.begin(); it != input_poly.end(); ++it)
             {
                point2d<T> current_point = (*it);
+
                bool current_point_in  = edge.inside_half_plane(current_point);
                bool previous_point_in = edge.inside_half_plane(previous_point);
 

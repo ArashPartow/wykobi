@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -27,24 +27,28 @@ namespace wykobi
 {
    namespace algorithm
    {
-      template<typename T>
+      template <typename T>
       struct polygon_triangulate < point2d<T> >
       {
       public:
-         template<typename OutputIterator>
+
+         template <typename OutputIterator>
          polygon_triangulate(const polygon<T,2>& polygon, OutputIterator out)
          {
             wykobi::polygon<T,2> internal_polygon;
+
             internal_polygon.reserve(polygon.size());
+
             std::copy(polygon.begin(),polygon.end(),std::back_inserter(internal_polygon));
+
             if (wykobi::polygon_orientation(internal_polygon) != Clockwise)
             {
                internal_polygon.reverse();
             }
 
-            while(internal_polygon.size() > 3)
+            while (internal_polygon.size() > 3)
             {
-               for(std::size_t i = 0; i < internal_polygon.size(); ++i)
+               for (std::size_t i = 0; i < internal_polygon.size(); ++i)
                {
                   if (convex_vertex(i,internal_polygon,Clockwise) && vertex_is_ear(i,internal_polygon))
                   {
@@ -54,6 +58,7 @@ namespace wykobi
                   }
                }
             }
+
             (*out++) = vertex_triangle(1,internal_polygon);
          }
       };

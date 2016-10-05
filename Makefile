@@ -2,9 +2,9 @@
 #  ***********************************************************************
 #  *                                                                     *
 #  * Wykobi Computational Geometry Library                               *
-#  * Release Version 0.0.4                                               *
+#  * Release Version 0.0.5                                               *
 #  * http://www.wykobi.com                                               *
-#  * Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *
+#  * Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *
 #  *                                                                     *
 #  * The Wykobi computational library and its components are supplied    *
 #  * under the terms of the General Wykobi License agreement. The        *
@@ -18,21 +18,22 @@
 #
 
 
-CC               = -c++
-OPTIONS          = -pedantic-errors -ansi -Wall -Werror -Wunused -O3 -o
-OPTIONS_LIBS     = -pedantic-errors -ansi -Wall -Werror -Wunused -O3 -c
+COMPILER     = -c++
+#COMPILER    = -clang
+OPTIONS      = -pedantic-errors -Wall -Wextra -Werror -O3 -o
+OPTIONS_LIBS = -pedantic-errors -Wall -Wextra -Werror -O3 -c
 
 CPP_SRC =
 
 OBJECTS = $(CPP_SRC:.cpp=.o)
 
 %.o: %.hpp %.cpp
-	$(CC) $(OPTIONS_LIBS) $*.cpp -o $@
+	$(COMPILER) $(OPTIONS_LIBS) $*.cpp -o $@
 
 all: $(OBJECTS) wykobi_build 
 
 wykobi_build : wykobi_build.cpp wykobi.hpp wykobi_math.hpp $(OBJECTS)
-	$(CC) $(OPTIONS) wykobi_build wykobi_build.cpp $(OBJECTS)
+	$(COMPILER) $(OPTIONS) wykobi_build wykobi_build.cpp $(OBJECTS)
 
 clean:
 	rm -f core *.o *.bak *stackdump

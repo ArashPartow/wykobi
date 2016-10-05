@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -30,17 +30,17 @@ namespace wykobi
 {
    namespace algorithm
    {
-
-      template<typename T>
+      template <typename T>
       struct randomized_minimum_bounding_ball < point2d<T> >
       {
       public:
-         template<typename InputIterator>
+         template <typename InputIterator>
          randomized_minimum_bounding_ball(InputIterator begin,
                                           InputIterator end,
                                           circle<T>& circle)
          {
             std::size_t point_count = std::distance(begin,end);
+
             switch (point_count)
             {
                case 0 : { return; } break;
@@ -48,12 +48,18 @@ namespace wykobi
                case 2 : { circle = make_circle(*begin,*(begin + 1)); return; } break;
                case 3 : { circle = make_circle(*begin,*(begin + 1),*(begin + 2)); return; } break;
             }
+
             std::vector< point2d<T> > point_list;
+
             point_list.reserve(point_count);
+
             std::copy(begin,end,std::back_inserter(point_list));
+
             std::random_shuffle(point_list.begin(),point_list.end());
+
             circle = make_circle(*point_list.begin(),*(point_list.begin() + 1));
-            for(InputIterator it = point_list.begin() + 2; it != point_list.end(); ++it)
+
+            for (InputIterator it = point_list.begin() + 2; it != point_list.end(); ++it)
             {
                if (!point_in_circle(*it,circle))
                {
@@ -63,47 +69,54 @@ namespace wykobi
          }
 
       private:
-         template<typename InputIterator>
+         template <typename InputIterator>
          circle<T> minimum_ball_with_1_point(InputIterator begin,
                                              InputIterator end,
                                              const point2d<T>& q)
          {
             std::random_shuffle(begin,end);
+
             circle<T> circle = make_circle(q,*begin);
-            for(InputIterator it = begin + 1; it != end; ++it)
+
+            for (InputIterator it = begin + 1; it != end; ++it)
             {
                if (!point_in_circle(*it,circle))
                {
                   circle = minimum_ball_with_2_points(begin,it - 1,q,*it);
                }
             }
+
             return circle;
          }
 
-         template<typename InputIterator>
+         template <typename InputIterator>
          circle<T> minimum_ball_with_2_points(InputIterator begin,
                                               InputIterator end,
                                               const point2d<T>& q1,
                                               const point2d<T>& q2)
          {
             std::random_shuffle(begin,end);
+
             circle<T> circle = make_circle(q1,q2);
-            for(InputIterator it = begin; it != end; ++it)
+
+            for (InputIterator it = begin; it != end; ++it)
             {
                if (!point_in_circle(*it,circle))
                {
                   circle = make_circle(q1,q2,*it);
                }
             }
+
             return circle;
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct randomized_minimum_bounding_ball_with_ch_filter < point2d<T> >
       {
       public:
-         template<typename InputIterator>
+
+         template <typename InputIterator>
          randomized_minimum_bounding_ball_with_ch_filter(InputIterator begin,
                                                          InputIterator end,
                                                          circle<T>& circle)
@@ -114,11 +127,12 @@ namespace wykobi
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct naive_minimum_bounding_ball < point2d<T> >
       {
       public:
-         template<typename InputIterator>
+
+         template <typename InputIterator>
          naive_minimum_bounding_ball(InputIterator begin,
                                      InputIterator end,
                                      circle<T>& circle)
@@ -134,16 +148,16 @@ namespace wykobi
             circle = degenerate_circle<T>();
 
             // Expected complexity O(n^4)
-            for(InputIterator it1 = begin; it1 != end; ++it1)
+            for (InputIterator it1 = begin; it1 != end; ++it1)
             {
-               for(InputIterator it2 = it1 + 1; it2 != end; ++it2)
+               for (InputIterator it2 = it1 + 1; it2 != end; ++it2)
                {
-                  for(InputIterator it3 = it2 + 1; it3 != end; ++it3)
+                  for (InputIterator it3 = it2 + 1; it3 != end; ++it3)
                   {
                      wykobi::circle<T> current_circle = make_circle((*it1),(*it2),(*it3));
                      bool contains_all_points = true;
 
-                     for(InputIterator n = begin; n != end; ++n)
+                     for (InputIterator n = begin; n != end; ++n)
                      {
                         if ((n!= it1) && (n!= it2) && (n!= it3) && (!point_in_circle((*n),current_circle)))
                         {
@@ -162,11 +176,12 @@ namespace wykobi
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct naive_minimum_bounding_ball_with_ch_filter < point2d<T> >
       {
       public:
-         template<typename InputIterator>
+
+         template <typename InputIterator>
          naive_minimum_bounding_ball_with_ch_filter(InputIterator begin,
                                                     InputIterator end,
                                                     circle<T>& circle)
@@ -177,11 +192,12 @@ namespace wykobi
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct ritter_minimum_bounding_ball < point2d<T> >
       {
       public:
-         template<typename InputIterator>
+
+         template <typename InputIterator>
          ritter_minimum_bounding_ball(InputIterator begin,
                                       InputIterator end,
                                       circle<T>& circle)
@@ -199,7 +215,7 @@ namespace wykobi
             point2d<T> max_x = negative_infinite_point2d<T>();
             point2d<T> max_y = negative_infinite_point2d<T>();
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                point2d<T> current_point = *it;
 
@@ -231,11 +247,12 @@ namespace wykobi
             circle = make_circle(dia1,dia2);
             T radius_sqr = sqr(circle.radius);
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                point2d<T> current_point = *it;
 
                T lay_dist = lay_distance_from_point_to_circle_center(current_point,circle);
+
                if (lay_dist > radius_sqr)
                {
                   T dist        = sqrt(lay_dist);
@@ -245,17 +262,18 @@ namespace wykobi
                   T ratio       = T(1.0) / dist;
                   circle        = make_circle((circle.radius * circle.x + difference * current_point.x) * ratio,
                                               (circle.radius * circle.y + difference * current_point.y) * ratio,
-                                              circle.radius);
+                                               circle.radius);
                }
             }
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct ritter_minimum_bounding_ball_with_ch_filter < point2d<T> >
       {
       public:
-         template<typename InputIterator>
+
+         template <typename InputIterator>
          ritter_minimum_bounding_ball_with_ch_filter(InputIterator begin,
                                                      InputIterator end,
                                                      circle<T>& circle)
@@ -266,11 +284,12 @@ namespace wykobi
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct ritter_minimum_bounding_ball < point3d<T> >
       {
       public:
-         template<typename InputIterator>
+
+         template <typename InputIterator>
          ritter_minimum_bounding_ball(InputIterator begin,
                                       InputIterator end,
                                       sphere<T>& sphere)
@@ -289,7 +308,7 @@ namespace wykobi
             point3d<T> max_y = negative_infinite_point3d<T>();
             point3d<T> max_z = negative_infinite_point3d<T>();
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                point3d<T> current_point = *it;
                if (current_point.x < min_x.x) min_x = current_point;
@@ -325,11 +344,12 @@ namespace wykobi
             sphere = make_sphere(dia1,dia2);
             T radius_sqr = sqr(sphere.radius);
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                point3d<T> current_point = *it;
 
                T lay_dist = lay_distance_from_point_to_sphere_center(current_point,sphere);
+
                if (lay_dist > radius_sqr)
                {
                   T dist        = sqrt(lay_dist);
@@ -337,6 +357,7 @@ namespace wykobi
                   radius_sqr    = sqr(sphere.radius);
                   T difference  = dist - sphere.radius;
                   T ratio       = T(1.0) / dist;
+
                   sphere = make_sphere((sphere.radius * sphere.x + difference * current_point.x) * ratio,
                                        (sphere.radius * sphere.y + difference * current_point.y) * ratio,
                                        (sphere.radius * sphere.z + difference * current_point.z) * ratio,

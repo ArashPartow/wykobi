@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -71,112 +71,112 @@ namespace wykobi
    static const Float _180DivPI = Float(57.295779513082320876798154814105000);
 
 
-   template<typename T> inline T sqr(const T& val);
-   template<typename T> inline T sqrt(const T& val);
-   template<typename T> inline T abs(const T& value);
-   template<typename T> inline T max(const T& value1, const T& value2);
-   template<typename T> inline T min(const T& value1, const T& value2);
-   template<typename T> inline T max(const T& value1, const T& value2, const T& value3);
-   template<typename T> inline T min(const T& value1, const T& value2, const T& value3);
-   template<typename T> inline T infinity();
+   template <typename T> inline T sqr(const T& val);
+   template <typename T> inline T sqrt(const T& val);
+   template <typename T> inline T abs(const T& value);
+   template <typename T> inline T max(const T& value1, const T& value2);
+   template <typename T> inline T min(const T& value1, const T& value2);
+   template <typename T> inline T max(const T& value1, const T& value2, const T& value3);
+   template <typename T> inline T min(const T& value1, const T& value2, const T& value3);
+   template <typename T> inline T infinity();
 
-   template<typename T> inline T sin(const T& value);
-   template<typename T> inline T cos(const T& value);
-   template<typename T> inline T tan(const T& value);
-   template<typename T> inline T asin(const T& value);
-   template<typename T> inline T acos(const T& value);
-   template<typename T> inline T atan(const T& value);
-   template<typename T> inline T approx_sin(T angle);
-   template<typename T> inline T approx_cos(T angle);
-   template<typename T> inline T approx_tan(T angle);
+   template <typename T> inline T sin(const T& value);
+   template <typename T> inline T cos(const T& value);
+   template <typename T> inline T tan(const T& value);
+   template <typename T> inline T asin(const T& value);
+   template <typename T> inline T acos(const T& value);
+   template <typename T> inline T atan(const T& value);
+   template <typename T> inline T approx_sin(T angle);
+   template <typename T> inline T approx_cos(T angle);
+   template <typename T> inline T approx_tan(T angle);
 
-   template<typename T> inline T clamp(const T& value, const T& low, const T& high);
+   template <typename T> inline T clamp(const T& value, const T& low, const T& high);
 
-   template<typename T>
+   template <typename T>
    inline T sqr(const T& val)
    {
       return val * val;
    }
 
-   template<typename T>
+   template <typename T>
    inline T sqrt(const T& val)
    {
       return std::sqrt(val);
    }
 
-   template<typename T>
+   template <typename T>
    inline T abs(const T& value)
    {
       return std::abs(value);
    }
 
-   template<typename T>
+   template <typename T>
    inline T max(const T& value1, const T& value2)
    {
       return std::max<T>(value1,value2);
    }
 
-   template<typename T>
+   template <typename T>
    inline T min(const T& value1, const T& value2)
    {
       return std::min<T>(value1,value2);
    }
 
-   template<typename T>
+   template <typename T>
    inline T max(const T& value1, const T& value2, const T& value3)
    {
       return max(value1,max(value2,value3));
    }
 
-   template<typename T>
+   template <typename T>
    inline T min(const T& value1, const T& value2, const T& value3)
    {
       return min(value1,min(value2,value3));
    }
 
-   template<typename T>
+   template <typename T>
    inline T infinity()
    {
       return std::numeric_limits<T>::infinity();
    }
 
-   template<typename T>
+   template <typename T>
    inline T sin(const T& value)
    {
       return std::sin(value);
    }
 
-   template<typename T>
+   template <typename T>
    inline T cos(const T& value)
    {
       return std::cos(value);
    }
 
-   template<typename T>
+   template <typename T>
    inline T tan(const T& value)
    {
       return std::tan(value);
    }
 
-   template<typename T>
+   template <typename T>
    inline T asin(const T& value)
    {
       return std::asin(value);
    }
 
-   template<typename T>
+   template <typename T>
    inline T acos(const T& value)
    {
       return std::acos(value);
    }
 
-   template<typename T>
+   template <typename T>
    inline T atan(const T& value)
    {
       return std::atan(value);
    }
 
-   template<typename T>
+   template <typename T>
    inline T approx_sin(T angle)
    {
       T final_sign = T(1.0);
@@ -200,7 +200,7 @@ namespace wykobi
       return result * final_sign;
    }
 
-   template<typename T>
+   template <typename T>
    inline T approx_cos(T angle)
    {
       T final_sign = T(1.0);
@@ -223,7 +223,7 @@ namespace wykobi
       return result * final_sign;
    }
 
-   template<typename T>
+   template <typename T>
    inline T approx_tan(T angle)
    {
       T final_sign = T(1.0);
@@ -249,7 +249,7 @@ namespace wykobi
       return result * final_sign;
    }
 
-   template<typename T>
+   template <typename T>
    inline T clamp(const T& value, const T& low_end, const T& high_end)
    {
       if (value < low_end ) return low_end;

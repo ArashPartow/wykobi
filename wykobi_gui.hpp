@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -38,7 +38,6 @@ enum eDisplayMode {
 
 class wykobi_window
 {
-
 public:
 
    wykobi_window(int argc, char* argv[])
@@ -109,9 +108,6 @@ private:
       handle->display_handler();
       glutSwapBuffers();
    }
-
-
 };
-
 
 #endif

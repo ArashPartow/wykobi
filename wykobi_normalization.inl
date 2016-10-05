@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -26,18 +26,19 @@ namespace wykobi
 {
    namespace algorithm
    {
-      template<typename T>
+      template <typename T>
       struct isotropic_normalization < point2d<T> >
       {
       public:
-         template<typename InputIterator>
+
+         template <typename InputIterator>
          isotropic_normalization(InputIterator begin, InputIterator end)
          {
             T mean_x = T(0.0);
             T mean_y = T(0.0);
             T n      = T(1.0 * std::distance(begin,end));
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                mean_x += (*it).x;
                mean_y += (*it).y;
@@ -47,7 +48,8 @@ namespace wykobi
             mean_y /= n;
 
             T total_distance = T(0.0);
-            for(InputIterator it = begin; it != end; ++it)
+
+            for (InputIterator it = begin; it != end; ++it)
             {
                total_distance += sqrt(sqr((*it).x - mean_x) + sqr((*it).y - mean_y));
             }
@@ -56,7 +58,7 @@ namespace wykobi
             T translate_x = -mean_x * scale;
             T translate_y = -mean_y * scale;
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                (*it).x = (*it).x * scale + translate_x;
                (*it).y = (*it).y * scale + translate_y;
@@ -64,11 +66,12 @@ namespace wykobi
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct isotropic_normalization < point3d<T> >
       {
       public:
-         template<typename InputIterator>
+
+         template <typename InputIterator>
          isotropic_normalization(InputIterator begin, InputIterator end)
          {
             T mean_x = T(0.0);
@@ -76,7 +79,7 @@ namespace wykobi
             T mean_z = T(0.0);
             T n      = T(1.0 * std::distance(begin,end));
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                mean_x += (*it).x;
                mean_y += (*it).y;
@@ -88,7 +91,8 @@ namespace wykobi
             mean_z /= n;
 
             T total_distance = T(0.0);
-            for(InputIterator it = begin; it != end; ++it)
+
+            for (InputIterator it = begin; it != end; ++it)
             {
                total_distance += sqrt(sqr((*it).x - mean_x) + sqr((*it).y - mean_y) + sqr((*it).z - mean_z));
             }
@@ -98,7 +102,7 @@ namespace wykobi
             T translate_y = -mean_y * scale;
             T translate_z = -mean_z * scale;
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                (*it).x = (*it).x * scale + translate_x;
                (*it).y = (*it).y * scale + translate_y;
@@ -107,48 +111,53 @@ namespace wykobi
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct covariance_matrix< point2d<T> >
       {
       public:
-         template<typename InputIterator>
+
+         template <typename InputIterator>
          matrix<T,2,2> operator()(InputIterator begin, InputIterator end)
          {
             T mean_x = T(0.0);
             T mean_y = T(0.0);
-            T n      = T(1.0 * distance(begin,end));
-            for(InputIterator it = begin; it != end; ++it)
+            T n      = T(1.0 * std::distance(begin,end));
+
+            for (InputIterator it = begin; it != end; ++it)
             {
                mean_x += (*it).x;
                mean_y += (*it).y;
             }
+
             mean_x /= n;
             mean_y /= n;
 
             matrix<T,2,2> matrix;
-            for(InputIterator it = begin; it != end; ++it)
+
+            for (InputIterator it = begin; it != end; ++it)
             {
                point2d<T> point = translate(-mean_x,-mean_y,(*it));
                matrix(0,0) += (point.x * point.x); matrix(1,0) += (point.x * point.y);
                matrix(0,1) += (point.x * point.y); matrix(1,1) += (point.y * point.y);
             }
+
             matrix /= n;
             return matrix;
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct covariance_matrix< point3d<T> >
       {
       public:
-         template<typename InputIterator>
+         template <typename InputIterator>
          matrix<T,3,3> operator()(InputIterator begin, InputIterator end)
          {
             T mean_x = T(0.0);
             T mean_y = T(0.0);
             T mean_z = T(0.0);
-            T n      = T(1.0 * distance(begin,end));
-            for(InputIterator it = begin; it != end; ++it)
+            T n      = T(1.0 * std::distance(begin,end));
+            for (InputIterator it = begin; it != end; ++it)
             {
                mean_x += (*it).x;
                mean_y += (*it).y;
@@ -159,7 +168,7 @@ namespace wykobi
             mean_z /= n;
 
             matrix<T,3,3> matrix;
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                point3d<T> point = translate(-mean_x,-mean_y,-mean_z,(*it));
                matrix(0,0) += (point.x * point.x); matrix(1,0) += (point.x * point.y); matrix(2,0) += (point.x * point.z);

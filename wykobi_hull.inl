@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -29,11 +29,12 @@ namespace wykobi
 {
    namespace algorithm
    {
-      template<typename T>
+      template <typename T>
       struct convex_hull_graham_scan < point2d<T> >
       {
       public:
-         template<typename InputIterator, typename OutputIterator>
+
+         template <typename InputIterator, typename OutputIterator>
          convex_hull_graham_scan(InputIterator begin, InputIterator end, OutputIterator out)
          {
             if (std::distance(begin,end) <= 3)
@@ -43,13 +44,14 @@ namespace wykobi
 
             std::vector<gs_point> point;
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                point.push_back(gs_point((*it).x,(*it).y,T(0.0)));
             }
 
             std::size_t j = 0;
-            for(std::size_t i = 1; i < point.size(); ++i)
+
+            for (std::size_t i = 1; i < point.size(); ++i)
             {
                if (point[i].y < point[j].y)
                   j = i;
@@ -60,7 +62,7 @@ namespace wykobi
 
             std::iter_swap(point.begin(),(point.begin() + j));
 
-            for(typename std::vector<gs_point>::iterator it = ++point.begin(); it != point.end(); ++it)
+            for (typename std::vector<gs_point>::iterator it = ++point.begin(); it != point.end(); ++it)
             {
                (*it).angle = cartesian_angle(static_cast<point2d<T> >(*it),static_cast<point2d<T> >(point.front()));
             }
@@ -74,7 +76,7 @@ namespace wykobi
 
             typename std::vector<gs_point>::iterator it = (point.begin() + 2);
 
-            while(it != point.end())
+            while (it != point.end())
             {
                if (pnt_queue.size() > 1)
                {
@@ -87,7 +89,7 @@ namespace wykobi
                   pnt_queue.push_front((*it++));
             }
 
-            for(typename std::deque<gs_point>::iterator it = pnt_queue.begin(); it != pnt_queue.end(); ++it)
+            for (typename std::deque<gs_point>::iterator it = pnt_queue.begin(); it != pnt_queue.end(); ++it)
             {
                (*out++) = make_point<T>((*it).x, (*it).y);
             }
@@ -98,13 +100,16 @@ namespace wykobi
          class gs_point : public point2d<T>
          {
          public:
+
             gs_point(const T& _x   = T(0.0),
                      const T& _y   = T(0.0),
-                     const T& _ang = T(0.0)) : angle(_ang)
-               {
-                  point2d<T>::x = _x;
-                  point2d<T>::y = _y;
-               }
+                     const T& _ang = T(0.0))
+            : angle(_ang)
+            {
+               point2d<T>::x = _x;
+               point2d<T>::y = _y;
+            }
+
             T angle;
          };
 
@@ -112,7 +117,9 @@ namespace wykobi
          {
          public:
 
-            gs_point_comparator(gs_point* _anchor):anchor(_anchor){};
+            gs_point_comparator(gs_point* _anchor)
+            : anchor(_anchor)
+            {}
 
             bool operator()(const gs_point& p1, const gs_point& p2)
             {
@@ -132,17 +139,18 @@ namespace wykobi
             }
 
          private:
-            gs_point* anchor;
 
+            gs_point* anchor;
          };
 
       };
 
-      template<typename T>
+      template <typename T>
       struct convex_hull_jarvis_march< point2d<T> >
       {
       public:
-         template<typename InputIterator, typename OutputIterator>
+
+         template <typename InputIterator, typename OutputIterator>
          convex_hull_jarvis_march(InputIterator begin, InputIterator end, OutputIterator out)
          {
             std::vector< point2d<T> >point_list;
@@ -180,14 +188,17 @@ namespace wykobi
                {
                   point_list.push_back(current_point);
                }
+
                previous_point = current_point;
             }
             while (not_equal(current_point,lowest_point));
 
             /* Remove consecutive collinear points */
             typedef typename std::vector< point2d<T> >::iterator Iterator;
+
             Iterator previous_it = point_list.end() - 1;
-            for(Iterator it = point_list.begin(); it != (point_list.end() - 1); ++it)
+
+            for (Iterator it = point_list.begin(); it != (point_list.end() - 1); ++it)
             {
                if (orientation(*previous_it,*it,*(it + 1)) != CollinearOrientation)
                {
@@ -195,6 +206,7 @@ namespace wykobi
                   previous_it = it;
                }
             }
+
             if (orientation(*previous_it,point_list.back(),point_list.front()) != CollinearOrientation)
             {
                (*out++) = point_list.back();
@@ -203,14 +215,16 @@ namespace wykobi
 
       };
 
-      template<typename Type>
+      template <typename Type>
       struct convex_hull_melkman< point2d<Type> >
       {
       public:
-         template<typename InputIterator, typename OutputIterator>
+
+         template <typename InputIterator, typename OutputIterator>
          convex_hull_melkman(InputIterator begin, InputIterator end, OutputIterator out)
          {
             std::size_t point_count = std::distance(begin,end);
+
             if (point_count <= 3)
             {
                std::copy(begin,end,out);
@@ -233,7 +247,7 @@ namespace wykobi
                deq.push_front((*(begin + 2)));
             }
 
-            for(InputIterator it = (begin + 3); it != end; ++it)
+            for (InputIterator it = (begin + 3); it != end; ++it)
             {
                if ((orientation(deq[deq.size() - 1],deq[deq.size() - 2],(*it)) == LeftHandSide) &&
                    (orientation(deq[1],             deq[0],             (*it)) == LeftHandSide))
@@ -241,22 +255,23 @@ namespace wykobi
                   continue;
                }
 
-               while(orientation(deq[deq.size() - 1],deq[deq.size() - 2],(*it)) != LeftHandSide)
+               while (orientation(deq[deq.size() - 1],deq[deq.size() - 2],(*it)) != LeftHandSide)
                {
                   deq.pop_back();
                }
+
                deq.push_back((*it));
 
-               while(orientation(deq[1],deq[0],(*it)) != LeftHandSide)
+               while (orientation(deq[1],deq[0],(*it)) != LeftHandSide)
                {
                   deq.pop_front();
                }
+
                deq.push_front((*it));
             }
 
             std::copy(deq.begin(),deq.end() - 1,out);
          }
-
       };
 
    } // namespace wykobi::algorithm

@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -30,22 +30,24 @@ namespace wykobi
 {
    namespace algorithm
    {
-      template<typename T>
+      template <typename T>
       struct ordered_polygon< point2d<T> >
       {
       public:
-         template<typename InputIterator, typename OutputIterator>
+
+         template <typename InputIterator, typename OutputIterator>
          ordered_polygon(InputIterator begin, InputIterator end, OutputIterator out)
          {
             std::vector< o_point > point;
 
-            for(InputIterator it = begin; it != end; ++it)
+            for (InputIterator it = begin; it != end; ++it)
             {
                point.push_back(o_point((*it).x,(*it).y,T(0.0)));
             }
 
             std::size_t j = 0;
-            for(std::size_t i = 1; i < point.size(); ++i)
+
+            for (std::size_t i = 1; i < point.size(); ++i)
             {
                if (point[i].y < point[j].y)
                   j = i;
@@ -56,30 +58,34 @@ namespace wykobi
 
             std::iter_swap(point.begin(),(point.begin() + j));
 
-            for(typename std::vector< o_point >::iterator it = ++point.begin(); it != point.end(); ++it)
+            for (typename std::vector< o_point >::iterator it = ++point.begin(); it != point.end(); ++it)
             {
                (*it).angle = cartesian_angle(static_cast< point2d<T> >(*it),static_cast<point2d<T> >(point.front()));
             }
 
             sort(++point.begin(),point.end(),point_comparator(&point.front()));
 
-            for(typename std::vector< o_point >::iterator it = point.begin(); it != point.end(); ++it)
+            for (typename std::vector< o_point >::iterator it = point.begin(); it != point.end(); ++it)
             {
                (*out++) = make_point<T>((*it).x, (*it).y);
             }
          }
 
       private:
+
          class o_point : public point2d<T>
          {
          public:
+
             o_point(const T& _x   = T(0.0),
                     const T& _y   = T(0.0),
-                    const T& _ang = T(0.0)) : angle(_ang)
-               {
-                  point2d<T>::x = _x;
-                  point2d<T>::y = _y;
-               }
+                    const T& _ang = T(0.0))
+            : angle(_ang)
+            {
+               point2d<T>::x = _x;
+               point2d<T>::y = _y;
+            }
+
             T angle;
          };
 
@@ -87,7 +93,9 @@ namespace wykobi
          {
          public:
 
-            point_comparator(o_point* _anchor):anchor(_anchor){};
+            point_comparator(o_point* _anchor)
+            : anchor(_anchor)
+            {}
 
             bool operator()(const o_point& p1, const o_point& p2)
             {
@@ -107,6 +115,7 @@ namespace wykobi
             }
 
          private:
+
             o_point* anchor;
          };
 

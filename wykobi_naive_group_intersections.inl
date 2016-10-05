@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -29,17 +29,17 @@ namespace wykobi
 {
    namespace algorithm
    {
-      template<typename T>
+      template <typename T>
       struct naive_group_intersections< segment<T,2> >
       {
       public:
 
-         template<typename InputIterator, typename OutputIterator>
+         template <typename InputIterator, typename OutputIterator>
          naive_group_intersections(InputIterator begin, InputIterator end, OutputIterator out)
          {
-            for(InputIterator i = begin; i != end; ++i)
+            for (InputIterator i = begin; i != end; ++i)
             {
-               for(InputIterator j = (i + 1); j != end; ++j)
+               for (InputIterator j = (i + 1); j != end; ++j)
                {
                   if (intersect((*j),(*i)))
                   {
@@ -50,17 +50,17 @@ namespace wykobi
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct naive_group_intersections< segment<T,3> >
       {
       public:
 
-         template<typename InputIterator, typename OutputIterator>
+         template <typename InputIterator, typename OutputIterator>
          naive_group_intersections(InputIterator begin, InputIterator end, OutputIterator out)
          {
-            for(InputIterator i = begin; i != end; ++i)
+            for (InputIterator i = begin; i != end; ++i)
             {
-               for(InputIterator j = (i + 1); j != end; ++j)
+               for (InputIterator j = (i + 1); j != end; ++j)
                {
                   if (intersect((*j),(*i)))
                   {
@@ -71,17 +71,17 @@ namespace wykobi
          }
       };
 
-      template<typename T>
+      template <typename T>
       struct naive_group_intersections< circle<T> >
       {
       public:
 
-         template<typename InputIterator, typename OutputIterator>
+         template <typename InputIterator, typename OutputIterator>
          naive_group_intersections(InputIterator begin, InputIterator end, OutputIterator out)
          {
-            for(InputIterator i = begin; i != end; ++i)
+            for (InputIterator i = begin; i != end; ++i)
             {
-               for(InputIterator j = (i + 1); j != end; ++j)
+               for (InputIterator j = (i + 1); j != end; ++j)
                {
 
                   if ((distance((*i).x,(*i).y,(*j).x,(*j).y) >= std::abs((*i).radius - (*j).radius)) &&

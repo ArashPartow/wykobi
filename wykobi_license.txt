@@ -1,6 +1,6 @@
 Wykobi Computational Geometry Library
 http://www.wykobi.com
-Copyright (c) 2005-2009 Arash Partow,  All Rights Reserved.
+Copyright (c) 2005-2016 Arash Partow,  All Rights Reserved.
 
 The Wykobi computational geometry library and its components are
 supplied under the terms of the General Wykobi License agreement.

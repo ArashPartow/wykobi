@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -26,18 +26,20 @@ namespace wykobi
 {
    namespace algorithm
    {
-
-      template<typename T>
+      template <typename T>
       struct remove_duplicates
       {
       public:
-         template<typename InputIterator, typename OutputIterator>
+
+         template <typename InputIterator, typename OutputIterator>
          remove_duplicates(InputIterator begin, InputIterator end, OutputIterator out)
          {
             std::sort(begin,end);
+
             T previous = (*begin);
-            (*out++) = (*begin);
-            for(InputIterator it = (begin + 1); it != end; ++it)
+              (*out++) = (*begin);
+
+            for (InputIterator it = (begin + 1); it != end; ++it)
             {
                if ((*it) > previous)
                {

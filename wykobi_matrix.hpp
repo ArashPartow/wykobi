@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -31,10 +31,11 @@
 
 namespace wykobi
 {
-   template<typename T, std::size_t M, std::size_t N>
+   template <typename T, std::size_t M, std::size_t N>
    class matrix
    {
    public:
+
       matrix()
       : dptr(reinterpret_cast<T*>(&data))
       {
@@ -100,25 +101,24 @@ namespace wykobi
       T* dptr;
    };
 
-   template<typename T> inline T det(const matrix<T,1,1>& matrix);
-   template<typename T> inline T det(const matrix<T,2,2>& matrix);
-   template<typename T> inline T det(const matrix<T,3,3>& matrix);
-   template<typename T> inline T det(const matrix<T,4,4>& matrix);
+   template <typename T> inline T det(const matrix<T,1,1>& matrix);
+   template <typename T> inline T det(const matrix<T,2,2>& matrix);
+   template <typename T> inline T det(const matrix<T,3,3>& matrix);
+   template <typename T> inline T det(const matrix<T,4,4>& matrix);
 
-   template<typename T> inline void transpose(matrix<T,1,1>& matrix);
-   template<typename T> inline void transpose(matrix<T,2,2>& matrix);
-   template<typename T> inline void transpose(matrix<T,3,3>& matrix);
-   template<typename T> inline void transpose(matrix<T,4,4>& matrix);
+   template <typename T> inline void transpose(matrix<T,1,1>& matrix);
+   template <typename T> inline void transpose(matrix<T,2,2>& matrix);
+   template <typename T> inline void transpose(matrix<T,3,3>& matrix);
+   template <typename T> inline void transpose(matrix<T,4,4>& matrix);
 
-   template<typename T> inline void inverse(matrix<T,2,2>& out_matrix, const matrix<T,2,2>& in_matrix);
-   template<typename T> inline void inverse(matrix<T,3,3>& out_matrix, const matrix<T,3,3>& in_matrix);
-   template<typename T> inline void inverse(matrix<T,4,4>& out_matrix, const matrix<T,4,4>& in_matrix);
+   template <typename T> inline void inverse(matrix<T,2,2>& out_matrix, const matrix<T,2,2>& in_matrix);
+   template <typename T> inline void inverse(matrix<T,3,3>& out_matrix, const matrix<T,3,3>& in_matrix);
+   template <typename T> inline void inverse(matrix<T,4,4>& out_matrix, const matrix<T,4,4>& in_matrix);
 
-   template<typename T, std::size_t N> inline void inverse(matrix<T,N,N>& out_matrix, const matrix<T,N,N>& in_matrix);
+   template <typename T, std::size_t N> inline void inverse(matrix<T,N,N>& out_matrix, const matrix<T,N,N>& in_matrix);
 
-   template<typename T> inline void eigen_values(const matrix<T,2,2>& matrix, T& eigen_value1, T& eigen_value2);
-   template<typename T> inline void eigenvector(const matrix<T,2,2>& matrix, vector2d<T>& eigenvector1, vector2d<T>& eigenvector2);
-
+   template <typename T> inline void eigen_values(const matrix<T,2,2>& matrix, T& eigen_value1, T& eigen_value2);
+   template <typename T> inline void eigenvector(const matrix<T,2,2>& matrix, vector2d<T>& eigenvector1, vector2d<T>& eigenvector2);
 
 } // namespace wykobi
 

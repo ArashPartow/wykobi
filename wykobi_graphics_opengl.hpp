@@ -2,9 +2,9 @@
 (***********************************************************************)
 (*                                                                     *)
 (* Wykobi Computational Geometry Library                               *)
-(* Release Version 0.0.4                                               *)
+(* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2009 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
 (* supplied under the terms of the General Wykobi License agreement.   *)
@@ -59,10 +59,10 @@ namespace wykobi
                                        {  255.0 / 255.0, 255.0 / 255.0,   0.0 / 255.0}
                                     };
 
-   template<typename T>
+   template <typename T>
    class wykobi_graphics_opengl
    {
-      public:
+   public:
 
          wykobi_graphics_opengl(const unsigned int& w, const unsigned int& h, DrawingMode dm)
          : _width(w),
@@ -223,7 +223,7 @@ namespace wykobi
             {
                glVertex2d(double(_polygon[0].x),double(_polygon[0].y));
             }
-            for(std::size_t i = (drawing_mode == eSolid)?1:0; i < _polygon.size(); ++i)
+            for (std::size_t i = (drawing_mode == eSolid)?1:0; i < _polygon.size(); ++i)
             {
                glVertex2d(double(_polygon[i].x),double(_polygon[i].y));
             }
@@ -297,7 +297,7 @@ namespace wykobi
 
          inline void draw_polyline(std::vector< point2d<T> > point_list)
          {
-            for(std::size_t i = 0; i < point_list.size() - 1; ++i)
+            for (std::size_t i = 0; i < point_list.size() - 1; ++i)
             {
                draw_segment(point_list[i],point_list[i+1]);
             }
@@ -305,7 +305,7 @@ namespace wykobi
 
          inline void draw_polyline(std::vector< point3d<T> > point_list)
          {
-            for(std::size_t i = 0; i < point_list.size() - 1; ++i)
+            for (std::size_t i = 0; i < point_list.size() - 1; ++i)
             {
                draw_segment(point_list[i],point_list[i+1]);
             }
@@ -337,7 +337,7 @@ namespace wykobi
             if (!convex)
             {
                std::size_t j = polygon.size() - 1;
-               for(std::size_t i = 0; i < polygon.size(); ++i)
+               for (std::size_t i = 0; i < polygon.size(); ++i)
                {
                   draw_segment(polygon[i],polygon[j]);
                   j = i;
@@ -351,7 +351,7 @@ namespace wykobi
                   case eOutLine : glBegin(GL_LINE_LOOP); break;
                   case eNoDraw  : return;
                }
-               for(std::size_t i = 0; i < polygon.size(); ++i)
+               for (std::size_t i = 0; i < polygon.size(); ++i)
                {
                 glVertex3d(polygon[i].x1,polygon[i].y1,polygon[i].z1);
                }
@@ -363,7 +363,7 @@ namespace wykobi
          {
             if (polygon.size() < 3) return;
             std::size_t j = polygon.size() - 1;
-            for(std::size_t i = 0; i < polygon.size(); ++i)
+            for (std::size_t i = 0; i < polygon.size(); ++i)
             {
                draw_segment(polygon[i],polygon[j]);
                j = i;
