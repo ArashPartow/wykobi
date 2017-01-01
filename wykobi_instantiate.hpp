@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -21,9 +21,12 @@
 #ifndef INCLUDE_WYKOBI_INSTANTIATE
 #define INCLUDE_WYKOBI_INSTANTIATE
 
+
 #include "wykobi.hpp"
 #include "wykobi_nd.hpp"
+#include "wykobi_algorithm.hpp"
 #include "wykobi_utilities.hpp"
+
 
 namespace wykobi
 {
@@ -406,6 +409,7 @@ namespace wykobi
       template triangle<T,3> create_excentral_triangle<T>(const triangle<T,3>& triangle);\
       template triangle<T,2> create_incentral_triangle<T>(const triangle<T,2>& triangle);\
       template triangle<T,3> create_incentral_triangle<T>(const triangle<T,3>& triangle);\
+      template triangle<T,2> create_intouch_triangle<T>(const triangle<T,2>& triangle);\
       template triangle<T,2> create_extouch_triangle<T>(const triangle<T,2>& triangle);\
       template triangle<T,3> create_extouch_triangle<T>(const triangle<T,3>& triangle);\
       template triangle<T,2> create_feuerbach_triangle<T>(const triangle<T,2>& triangle);\
@@ -423,6 +427,8 @@ namespace wykobi
       template void torricelli_point<T>(const T& x1, const T& y1, const T& x2, const T& y2, const T& x3, const T& y3, T& px, T& py);\
       template point2d<T> torricelli_point<T>(const point2d<T>& point1, const point2d<T>& point2, const point2d<T>& point3);\
       template point2d<T> torricelli_point<T>(const triangle<T,2>& triangle);\
+      template bool trilateration<T>(const T& c0x, const T& c0y, const T& c0r, const T& c1x, const T& c1y, const T& c1r, const T& c2x, const T& c2y, const T& c2r, T& px, T& py);\
+      template point2d<T> trilateration<T>(const circle<T>& c0, const circle<T>& c1, const circle<T>& c2);\
       template void incenter<T>(const T& x1, const T& y1, const T& x2, const T& y2, const T& x3, const T& y3, T& px, T& py);\
       template void incenter<T>(const T& x1, const T& y1, const T& z1, const T& x2, const T& y2, const T& z2, const T& x3, const T& y3, const T& z3, T& px, T& py, T& pz);\
       template point2d<T> incenter<T>(const point2d<T>& point1, const point2d<T>& point2, const point2d<T>& point3);\
@@ -896,30 +902,30 @@ namespace wykobi
       template quadix<T,3> rotate<T>(const T& rx, const T& ry, const T& rz, const quadix<T,3>& quadix, const point3d<T>& opoint);\
       template polygon<T,3> rotate<T>(const T& rx, const T& ry, const T& rz, const polygon<T,3>& polygon);\
       template polygon<T,3> rotate<T>(const T& rx, const T& ry, const T& rz, const polygon<T,3>& polygon, const point3d<T>& opoint);\
-      template void fast_rotate<T>(const int rotation_angle, const T& x, const T& y, T& nx, T& ny);\
-      template void fast_rotate<T>(const int rotation_angle, const T& x, const T& y, const T& ox, const T& oy, T& nx, T& ny);\
-      template point2d<T> fast_rotate<T>(const int rotation_angle, const point2d<T>& point);\
-      template point2d<T> fast_rotate<T>(const int rotation_angle, const point2d<T>& point, const point2d<T>& opoint);\
-      template segment<T,2> fast_rotate<T>(const int rotation_angle, const segment<T,2>& segment);\
-      template segment<T,2> fast_rotate<T>(const int rotation_angle, const segment<T,2>& segment, const point2d<T>& opoint);\
-      template triangle<T,2> fast_rotate<T>(const int rotation_angle, const triangle<T,2>& triangle);\
-      template triangle<T,2> fast_rotate<T>(const int rotation_angle, const triangle<T,2>& triangle, const point2d<T>& opoint);\
-      template quadix<T,2> fast_rotate<T>(const int rotation_angle, const quadix<T,2>& quadix);\
-      template quadix<T,2> fast_rotate<T>(const int rotation_angle, const quadix<T,2>& quadix, const point2d<T>& opoint);\
-      template polygon<T,2> fast_rotate<T>(const int rotation_angle, const polygon<T,2>& polygon);\
-      template polygon<T,2> fast_rotate<T>(const int rotation_angle, const polygon<T,2>& polygon, const point2d<T>& opoint);\
-      template void fast_rotate<T>(const int rx, const int ry, const int rz, const T&x, const T&y, const T&z, T& nx, T& ny, T& nz);\
-      template void fast_rotate<T>(const int rx, const int ry, const int rz, const T&x, const T&y, const T&z, const T& ox, const T& oy, const T& oz, T& nx, T& ny, T& nz);\
-      template point3d<T> fast_rotate<T>(const int rx, const int ry, const int rz, const point3d<T>& point);\
-      template point3d<T> fast_rotate<T>(const int rx, const int ry, const int rz, const point3d<T>& point, const point3d<T>& opoint);\
-      template segment<T,3> fast_rotate<T>(const int rx, const int ry, const int rz, const segment<T,3>& segment);\
-      template segment<T,3> fast_rotate<T>(const int rx, const int ry, const int rz, const segment<T,3>& segment, const point3d<T>& opoint);\
-      template triangle<T,3> fast_rotate<T>(const int rx, const int ry, const int rz, const triangle<T,3>& triangle);\
-      template triangle<T,3> fast_rotate<T>(const int rx, const int ry, const int rz, const triangle<T,3>& triangle, const point3d<T>& opoint);\
-      template quadix<T,3> fast_rotate<T>(const int rx, const int ry, const int rz, const quadix<T,3>& quadix);\
-      template quadix<T,3> fast_rotate<T>(const int rx, const int ry, const int rz, const quadix<T,3>& quadix, const point3d<T>& opoint);\
-      template polygon<T,3> fast_rotate<T>(const int rx, const int ry, const int rz, const polygon<T,3>& polygon);\
-      template polygon<T,3> fast_rotate<T>(const int rx, const int ry, const int rz, const polygon<T,3>& polygon, const point3d<T>& opoint);\
+      template void fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const T& x, const T& y, T& nx, T& ny);\
+      template void fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const T& x, const T& y, const T& ox, const T& oy, T& nx, T& ny);\
+      template point2d<T> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const point2d<T>& point);\
+      template point2d<T> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const point2d<T>& point, const point2d<T>& opoint);\
+      template segment<T,2> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const segment<T,2>& segment);\
+      template segment<T,2> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const segment<T,2>& segment, const point2d<T>& opoint);\
+      template triangle<T,2> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const triangle<T,2>& triangle);\
+      template triangle<T,2> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const triangle<T,2>& triangle, const point2d<T>& opoint);\
+      template quadix<T,2> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const quadix<T,2>& quadix);\
+      template quadix<T,2> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const quadix<T,2>& quadix, const point2d<T>& opoint);\
+      template polygon<T,2> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const polygon<T,2>& polygon);\
+      template polygon<T,2> fast_rotate<T>(const trig_luts<T>& lut, const int rotation_angle, const polygon<T,2>& polygon, const point2d<T>& opoint);\
+      template void fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const T&x, const T&y, const T&z, T& nx, T& ny, T& nz);\
+      template void fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const T&x, const T&y, const T&z, const T& ox, const T& oy, const T& oz, T& nx, T& ny, T& nz);\
+      template point3d<T> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const point3d<T>& point);\
+      template point3d<T> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const point3d<T>& point, const point3d<T>& opoint);\
+      template segment<T,3> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const segment<T,3>& segment);\
+      template segment<T,3> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const segment<T,3>& segment, const point3d<T>& opoint);\
+      template triangle<T,3> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const triangle<T,3>& triangle);\
+      template triangle<T,3> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const triangle<T,3>& triangle, const point3d<T>& opoint);\
+      template quadix<T,3> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const quadix<T,3>& quadix);\
+      template quadix<T,3> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const quadix<T,3>& quadix, const point3d<T>& opoint);\
+      template polygon<T,3> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const polygon<T,3>& polygon);\
+      template polygon<T,3> fast_rotate<T>(const trig_luts<T>& lut, const int rx, const int ry, const int rz, const polygon<T,3>& polygon, const point3d<T>& opoint);\
       template point2d<T> translate<T>(const T& dx, const T& dy, const point2d<T>& point);\
       template line<T,2> translate<T>(const T& dx, const T& dy, const line<T,2>& line);\
       template segment<T,2> translate<T>(const T& dx, const T& dy, const segment<T,2>& segment);\
@@ -1197,15 +1203,16 @@ namespace wykobi
       template sphere<T> make_sphere<T>(const point3d<T>& point, const T& radius);\
       template sphere<T> make_sphere<T>(const point3d<T>& point1, const point3d<T>& point2);\
       template plane<T,3> make_plane<T>(const T& x1, const T& y1, const T& z1, const T& x2, const T& y2, const T& z2, const T& x3, const T& y3, const T& z3);\
+      template plane<T,3> make_plane<T>(const T& px, const T& py, const T& pz, const T& nx, const T& ny, const T& nz);\
       template plane<T,3> make_plane<T>(const point3d<T>& point1, const point3d<T>& point2, const point3d<T>& point3);\
+      template plane<T,3> make_plane<T>(const point3d<T>& point, const vector3d<T>& normal);\
       template plane<T,3> make_plane<T>(const triangle<T,3>& triangle);\
       template polygon<T,2> make_polygon<T>(const std::vector< point2d<T> >& point_list);\
       template polygon<T,3> make_polygon<T>(const std::vector< point3d<T> >& point_list);\
       template polygon<T,2> make_polygon<T>(const triangle<T,2>& triangle);\
       template polygon<T,2> make_polygon<T>(const quadix<T,2>& quadix);\
       template polygon<T,2> make_polygon<T>(const rectangle<T>& rectangle);\
-      template polygon<T,2> make_polygon<T>(const circle<T>& circle, const unsigned int point_count);
-
+      template polygon<T,2> make_polygon<T>(const circle<T>& circle, const unsigned int point_count);\
 
    #define INSTANTIATE_WYKOBI_ND(T, D, OutputIterator)\
       template bool parallel<T,D>(const line<T,D>& line1, const line<T,D>& line2);\
@@ -1346,6 +1353,41 @@ namespace wykobi
       template std::ostream& operator<< <T,D>(std::ostream& os, const triangle<T,D>& triangle);\
       template std::ostream& operator<< <T,D>(std::ostream& os, const quadix<T,D>& quadix);    \
 
+
+   #define INSTANTIATE_WYKOBI_ALGORITHMS(T,K)                                                                                                \
+   std::vector<point2d<T>    > K##vec2d;                                                                                                     \
+   std::vector<point3d<T>    > K##vec3d;                                                                                                     \
+   std::vector<circle<T>     > K##clist;                                                                                                     \
+   std::vector<segment<T,2>  > K##s2dlist;                                                                                                   \
+   std::vector<segment<T,3>  > K##s3dlist;                                                                                                   \
+   std::vector<triangle<T,2> > K##t2dlist;                                                                                                   \
+   rectangle<T>                K##rect2d;                                                                                                    \
+   polygon<T,2>                K##poly2d;                                                                                                    \
+   circle<T>                   K##circle2d;                                                                                                  \
+   sphere<T>                   K##sphere3d;                                                                                                  \
+                                                                                                                                             \
+   algorithm::isotropic_normalization< point2d<T> >                          K##obj00(K##vec2d.begin(),K##vec2d.end());                      \
+   algorithm::isotropic_normalization< point3d<T> >                          K##obj01(K##vec3d.begin(),K##vec3d.end());                      \
+   algorithm::convex_hull_graham_scan< point2d<T> >                          K##obj02(K##vec2d.begin(),K##vec2d.end(),K##vec2d.begin());     \
+   algorithm::convex_hull_jarvis_march< point2d<T> >                         K##obj03(K##vec2d.begin(),K##vec2d.end(),K##vec2d.begin());     \
+   algorithm::convex_hull_melkman< point2d<T> >                              K##obj04(K##vec2d.begin(),K##vec2d.end(),K##vec2d.begin());     \
+   algorithm::covariance_matrix< point2d<T> >                                K##obj05;                                                       \
+   algorithm::covariance_matrix< point3d<T> >                                K##obj06;                                                       \
+   algorithm::ordered_polygon< point2d<T> >                                  K##obj07(K##vec2d  .begin(),K##vec2d  .end(),K##vec2d.begin()); \
+   algorithm::naive_group_intersections< segment<T,2> >                      K##obj08(K##s2dlist.begin(),K##s2dlist.end(),K##vec2d.begin()); \
+   algorithm::naive_group_intersections< segment<T,3> >                      K##obj09(K##s3dlist.begin(),K##s3dlist.end(),K##vec3d.begin()); \
+   algorithm::naive_group_intersections< circle<T> >                         K##obj10(K##clist  .begin(),K##clist  .end(),K##vec2d.begin()); \
+   algorithm::naive_minimum_bounding_ball< point2d<T> >                      K##obj11(K##vec2d  .begin(),K##vec2d  .end(),K##circle2d);      \
+   algorithm::naive_minimum_bounding_ball_with_ch_filter< point2d<T> >       K##obj12(K##vec2d  .begin(),K##vec2d  .end(),K##circle2d);      \
+   algorithm::randomized_minimum_bounding_ball< point2d<T> >                 K##obj13(K##vec2d  .begin(),K##vec2d  .end(),K##circle2d);      \
+   algorithm::randomized_minimum_bounding_ball_with_ch_filter < point2d<T> > K##obj14(K##vec2d  .begin(),K##vec2d  .end(),K##circle2d);      \
+   algorithm::ritter_minimum_bounding_ball< point2d<T> >                     K##obj15(K##vec2d  .begin(),K##vec2d  .end(),K##circle2d);      \
+   algorithm::ritter_minimum_bounding_ball< point3d<T> >                     K##obj16(K##vec3d  .begin(),K##vec3d  .end(),K##sphere3d);      \
+   algorithm::ritter_minimum_bounding_ball_with_ch_filter< point2d<T> >      K##obj19(K##vec2d  .begin(),K##vec2d  .end(),K##circle2d);      \
+   algorithm::generate_axis_projection_descriptor<T>                         K##obj20(K##poly2d,K##vec2d.begin());                           \
+   algorithm::sutherland_hodgman_polygon_clipper< point2d<T> >               K##obj21(K##rect2d,K##poly2d,K##poly2d);                        \
+   algorithm::polygon_triangulate< point2d<T> >                              K##obj23(K##poly2d,K##t2dlist.begin());                         \
+
    typedef wykobi::point2d<float>*  flt_pnt_2d;
    typedef wykobi::point2d<double>* dbl_pnt_2d;
 
@@ -1373,21 +1415,21 @@ namespace wykobi
    typedef pointnd<double, 9> pointnd_dbl_9;
    typedef pointnd<double,10> pointnd_dbl_10;
 
-   INSTANTIATE_WYKOBI_ND(float, 4,  pointnd_flt_4)
-   INSTANTIATE_WYKOBI_ND(float, 5,  pointnd_flt_5)
-   INSTANTIATE_WYKOBI_ND(float, 6,  pointnd_flt_6)
-   INSTANTIATE_WYKOBI_ND(float, 7,  pointnd_flt_7)
-   INSTANTIATE_WYKOBI_ND(float, 8,  pointnd_flt_8)
-   INSTANTIATE_WYKOBI_ND(float, 9,  pointnd_flt_9)
-   INSTANTIATE_WYKOBI_ND(float,10, pointnd_flt_10)
+   INSTANTIATE_WYKOBI_ND(float,  4,  pointnd_flt_4)
+   INSTANTIATE_WYKOBI_ND(float,  5,  pointnd_flt_5)
+   INSTANTIATE_WYKOBI_ND(float,  6,  pointnd_flt_6)
+   INSTANTIATE_WYKOBI_ND(float,  7,  pointnd_flt_7)
+   INSTANTIATE_WYKOBI_ND(float,  8,  pointnd_flt_8)
+   INSTANTIATE_WYKOBI_ND(float,  9,  pointnd_flt_9)
+   INSTANTIATE_WYKOBI_ND(float, 10, pointnd_flt_10)
 
-   INSTANTIATE_WYKOBI_ND(double, 4,  pointnd_dbl_4)
-   INSTANTIATE_WYKOBI_ND(double, 5,  pointnd_dbl_5)
-   INSTANTIATE_WYKOBI_ND(double, 6,  pointnd_dbl_6)
-   INSTANTIATE_WYKOBI_ND(double, 7,  pointnd_dbl_7)
-   INSTANTIATE_WYKOBI_ND(double, 8,  pointnd_dbl_8)
-   INSTANTIATE_WYKOBI_ND(double, 9,  pointnd_dbl_9)
-   INSTANTIATE_WYKOBI_ND(double,10, pointnd_dbl_10)
+   INSTANTIATE_WYKOBI_ND(double,  4,  pointnd_dbl_4)
+   INSTANTIATE_WYKOBI_ND(double,  5,  pointnd_dbl_5)
+   INSTANTIATE_WYKOBI_ND(double,  6,  pointnd_dbl_6)
+   INSTANTIATE_WYKOBI_ND(double,  7,  pointnd_dbl_7)
+   INSTANTIATE_WYKOBI_ND(double,  8,  pointnd_dbl_8)
+   INSTANTIATE_WYKOBI_ND(double,  9,  pointnd_dbl_9)
+   INSTANTIATE_WYKOBI_ND(double, 10, pointnd_dbl_10)
    */
 
    INSTANTIATE_WYKOBI_MATH(float)
@@ -1401,6 +1443,9 @@ namespace wykobi
 
    INSTANTIATE_WYKOBI_UTILITIES_2(float,3)
    INSTANTIATE_WYKOBI_UTILITIES_2(double,3)
+
+   INSTANTIATE_WYKOBI_ALGORITHMS(float, f)
+   INSTANTIATE_WYKOBI_ALGORITHMS(double,d)
 
 } // wykobi namespace
 

@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -22,6 +22,7 @@
 #include "wykobi_algorithm.hpp"
 
 #include <algorithm>
+
 
 namespace wykobi
 {
@@ -35,6 +36,14 @@ namespace wykobi
          template <typename OutputIterator>
          polygon_triangulate(const polygon<T,2>& polygon, OutputIterator out)
          {
+            if (polygon.size() < 3)
+               return;
+            else if (polygon.size() == 3)
+            {
+               (*out++) = make_triangle(polygon[0], polygon[1], polygon[2]);
+               return;
+            }
+
             wykobi::polygon<T,2> internal_polygon;
 
             internal_polygon.reserve(polygon.size());
@@ -53,7 +62,9 @@ namespace wykobi
                   if (convex_vertex(i,internal_polygon,Clockwise) && vertex_is_ear(i,internal_polygon))
                   {
                      (*out++) = vertex_triangle(i,internal_polygon);
+
                      internal_polygon.erase(i);
+
                      break;
                   }
                }

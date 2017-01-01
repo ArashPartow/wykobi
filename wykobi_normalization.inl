@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -21,6 +21,7 @@
 #include "wykobi.hpp"
 #include "wykobi_algorithm.hpp"
 #include "wykobi_matrix.hpp"
+
 
 namespace wykobi
 {
@@ -142,6 +143,7 @@ namespace wykobi
             }
 
             matrix /= n;
+
             return matrix;
          }
       };
@@ -157,25 +159,31 @@ namespace wykobi
             T mean_y = T(0.0);
             T mean_z = T(0.0);
             T n      = T(1.0 * std::distance(begin,end));
+
             for (InputIterator it = begin; it != end; ++it)
             {
                mean_x += (*it).x;
                mean_y += (*it).y;
                mean_z += (*it).z;
             }
+
             mean_x /= n;
             mean_y /= n;
             mean_z /= n;
 
             matrix<T,3,3> matrix;
+
             for (InputIterator it = begin; it != end; ++it)
             {
                point3d<T> point = translate(-mean_x,-mean_y,-mean_z,(*it));
+
                matrix(0,0) += (point.x * point.x); matrix(1,0) += (point.x * point.y); matrix(2,0) += (point.x * point.z);
                matrix(0,1) += (point.x * point.y); matrix(1,1) += (point.y * point.y); matrix(2,1) += (point.y * point.z);
                matrix(0,2) += (point.x * point.z); matrix(1,2) += (point.y * point.z); matrix(2,2) += (point.z * point.z);
             }
+
             matrix /= n;
+
             return matrix;
          }
       };

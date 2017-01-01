@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -21,8 +21,10 @@
 #ifndef INCLUDE_WYKOBI_MATH
 #define INCLUDE_WYKOBI_MATH
 
+
 #include <cmath>
 #include <limits>
+
 
 namespace wykobi
 {
@@ -40,25 +42,12 @@ namespace wykobi
     typedef long double Float;
    #endif
 
-   /************[ Epsilon constants ]*************/
+   /*************[ Epsilon constants ]*************/
    static const Float Epsilon_High      = 1.0E-16;
    static const Float Epsilon_Medium    = 1.0E-10;
    static const Float Epsilon_Low       = 1.0E-07;
    static const Float Epsilon           = Epsilon_Medium;
-
-
-   #ifdef WYKOBI_SINGLE_PRECISION
-    static const float Infinity          = std::numeric_limits<float>::infinity();
-   #endif
-
-   #ifdef WYKOBI_DOUBLE_PRECISION
-    static const double Infinity         = std::numeric_limits<double>::infinity();
-   #endif
-
-   #ifdef WYKOBI_EXTENDED_PRECISION
-    static const long double Infinity    = std::numeric_limits<long double>::infinity();
-   #endif
-
+   static const Float Infinity          = std::numeric_limits<Float>::infinity();
 
    /********[ Random resolution constants ]********/
    static const std::size_t RANDOM_RESOLUTION_INT = 1000000000;
@@ -180,9 +169,11 @@ namespace wykobi
    inline T approx_sin(T angle)
    {
       T final_sign = T(1.0);
+
            if ((angle <= T(180.0)) && (angle >     90.0)) { angle = T(180.0) - angle;    final_sign = T( 1.0); }
       else if ((angle <= T(270.0)) && (angle > T(180.0))) { angle = angle    - T(180.0); final_sign = T(-1.0); }
       else if ((angle <= T(360.0)) && (angle > T(270.0))) { angle = T(360.0) - angle;    final_sign = T(-1.0); }
+
       angle *=  T(PI / 180.0);
       T asqr = angle * angle;
       T result = T(-2.39e-08);
@@ -197,6 +188,7 @@ namespace wykobi
       result *= asqr;
       result += T(1.0);
       result *= angle;
+
       return result * final_sign;
    }
 
@@ -204,9 +196,11 @@ namespace wykobi
    inline T approx_cos(T angle)
    {
       T final_sign = T(1.0);
+
            if ((angle <= T(180.0)) && (angle >     90.0)) { angle = T(180.0) - angle;    final_sign = T(-1.0); }
       else if ((angle <= T(270.0)) && (angle > T(180.0))) { angle = angle    - T(180.0); final_sign = T(-1.0); }
       else if ((angle <= T(360.0)) && (angle > T(270.0))) { angle = T(360.0) - angle;    final_sign = T( 1.0); }
+
       angle *=  T(PI / 180.0);
       T asqr = angle * angle;
       T result = T(-2.605e-07);
@@ -220,6 +214,7 @@ namespace wykobi
       result -= T(4.999999963e-01);
       result *= asqr;
       result += T(1.0);
+
       return result * final_sign;
    }
 
@@ -227,9 +222,11 @@ namespace wykobi
    inline T approx_tan(T angle)
    {
       T final_sign = T(1.0);
+
            if ((angle <= T(180.0)) && (angle >     90.0)) { angle = T(180.0) - angle;    final_sign = T(-1.0); }
       else if ((angle <= T(270.0)) && (angle > T(180.0))) { angle = angle    - T(180.0); final_sign = T( 1.0); }
       else if ((angle <= T(360.0)) && (angle > T(270.0))) { angle = T(360.0) - angle;    final_sign = T(-1.0); }
+
       angle *=  T(PI / 180.0);
       T asqr = angle * angle;
       T result = T(9.5168091e-03);
@@ -246,6 +243,7 @@ namespace wykobi
       result *= asqr;
       result += T(1.0);
       result *= angle;
+
       return result * final_sign;
    }
 
@@ -254,6 +252,7 @@ namespace wykobi
    {
       if (value < low_end ) return low_end;
       if (value > high_end) return high_end;
+
       return value;
    }
 

@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -84,12 +84,16 @@ namespace wykobi
                for (InputIterator j = (i + 1); j != end; ++j)
                {
 
-                  if ((distance((*i).x,(*i).y,(*j).x,(*j).y) >= std::abs((*i).radius - (*j).radius)) &&
-                       intersect((*j),(*i)))
+                  if (
+                       (distance((*i).x,(*i).y,(*j).x,(*j).y) >= std::abs((*i).radius - (*j).radius)) &&
+                       intersect((*j),(*i))
+                     )
                   {
                      point2d<T> p1;
                      point2d<T> p2;
+
                      intersection_point((*j),(*i),p1,p2);
+
                      (*out++) = p1;
                      (*out++) = p2;
                   }

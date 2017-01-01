@@ -15,10 +15,23 @@ efficient 2D/3D computational geometry back-end.
 + Clang/LLVM (1.1+)
 + PGI C++ (10.x+)
 + Microsoft Visual Studio C++ Compiler (7.1+)
++ IBM XL C/C++ (9.x+)
++ C++ Builder (XE4+)
 
 
 #### Download
 http://www.wykobi.com
+
+
+#### Documentation And Tutorial
+http://www.wykobi.com/tutorial.html
+
+
+#### License
+The Wykobi computational geometry library and all its components
+are supplied under the terms of the MIT License. The contents of
+the Wykobi library and its components may not be copied or disclosed
+except in accordance with the terms of the MIT License.
 
 
 #### General Features
@@ -96,6 +109,7 @@ http://www.wykobi.com
 * Symmedial triangle
 * Symmedian point
 * Torricelli point
+* Trilateration
 * Triangle median
 * Triangle symmedian
 * and plenty more...

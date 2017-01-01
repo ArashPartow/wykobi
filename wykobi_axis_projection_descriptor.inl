@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -21,6 +21,7 @@
 #include "wykobi.hpp"
 #include "wykobi_algorithm.hpp"
 #include "wykobi_matrix.hpp"
+
 
 namespace wykobi
 {
@@ -31,10 +32,15 @@ namespace wykobi
       struct generate_axis_projection_descriptor
       {
       public:
+
          template <typename OutputIterator>
          generate_axis_projection_descriptor(const polygon<T,2>& polygon, OutputIterator descriptor)
          {
             const std::size_t axis_count = 36;
+
+            if (polygon.size() == 0)
+               return;
+
             std::vector<T> value;
             value.reserve(axis_count);
 
@@ -65,6 +71,7 @@ namespace wykobi
             {
                if ((*it) < (*smallest_it)) smallest_it = it;
             }
+
             std::rotate(value.begin(),smallest_it,value.end());
             std::copy(value.begin(),value.end(),descriptor);
          }

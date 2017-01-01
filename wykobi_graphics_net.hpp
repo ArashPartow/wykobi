@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -20,6 +20,7 @@
 
 #ifndef INCLUDE_WYKOBI_GRAPHICS_NET
 #define INCLUDE_WYKOBI_GRAPHICS_NET
+
 
 #include <iostream>
 #include <iterator>
@@ -35,6 +36,7 @@
 using namespace System;
 using namespace System::Drawing;
 
+
 namespace wykobi
 {
    template <typename T>
@@ -43,8 +45,8 @@ namespace wykobi
    public:
 
       wykobi_graphics_net(Graphics^ gc, const unsigned int& w, const unsigned int& h)
-      : gc_(gc),
-        width_(w),
+      : gc_    (gc),
+        width_ (w),
         height_(h)
       {
          pen_ = gcnew Pen(System::Drawing::Color::Black,1);
@@ -57,7 +59,12 @@ namespace wykobi
 
       inline void set_pen(Pen^ _pen) const
       {
-         pen = pen;
+         pen_ = _pen;
+      }
+
+      inline float get_pen_width() const
+      {
+         return pen_->Width;
       }
 
       inline void set_pen_width(const unsigned int& w) const
@@ -67,13 +74,13 @@ namespace wykobi
 
       inline void set_dash_mode() const
       {
-         array<Single>^temp0 = {5.0F,5.0F,5.0F,5.0F};
+         array<Single>^ temp0 = {5.0F, 5.0F, 5.0F, 5.0F};
          pen_->DashPattern = temp0;
       }
 
       inline void set_nodash_mode() const
       {
-         array<Single>^temp0 = {1.0F,1.0F,1.0F,1.0F};
+         array<Single>^ temp0 = {1.0F, 0.0001F};
          pen_->DashPattern = temp0;
       }
 
@@ -117,22 +124,24 @@ namespace wykobi
 
       inline void draw_segment(const T& x1, const T& y1, const T& x2, const T& y2) const
       {
-         gc_->DrawLine(pen_,float(x1),float(y1),float(x2),float(y2));
+         gc_->DrawLine(pen_, float(x1), float(y1), float(x2), float(y2));
       }
 
       inline void draw_segment(const point2d<T>& point1, const point2d<T>& point2) const
       {
-         draw_segment(point1.x,point1.y,point2.x,point2.y);
+         draw_segment(point1.x, point1.y, point2.x, point2.y);
       }
 
       inline void draw_line(const T& x1, const T& y1, const T& x2, const T& y2) const
       {
          T dx = x2 - x1;
          T dy = y2 - y1;
+
          if (dx != 0.0)
          {
             T m = dy / dx;
             T c = y1 - m * x1;
+
             draw_segment(0.0,c,width_,m * width_ + c);
          }
          else
@@ -143,9 +152,9 @@ namespace wykobi
                                 const T& x2, const T& y2,
                                 const T& x3, const T& y3) const
       {
-         draw_segment(x1,y1,x2,y2);
-         draw_segment(x2,y2,x3,y3);
-         draw_segment(x3,y3,x1,y1);
+         draw_segment(x1, y1, x2, y2);
+         draw_segment(x2, y2, x3, y3);
+         draw_segment(x3, y3, x1, y1);
       }
 
       inline void draw_rectangle(const T& x1, const T& y1, const T& x2, const T& y2) const
@@ -158,15 +167,20 @@ namespace wykobi
                               const T& x3, const T& y3,
                               const T& x4, const T& y4) const
       {
-         draw_segment(x1,y1,x2,y2);
-         draw_segment(x2,y2,x3,y3);
-         draw_segment(x3,y3,x4,y4);
-         draw_segment(x4,y4,x1,y1);
+         draw_segment(x1, y1, x2, y2);
+         draw_segment(x2, y2, x3, y3);
+         draw_segment(x3, y3, x4, y4);
+         draw_segment(x4, y4, x1, y1);
       }
 
       inline void draw_circle(const T& x, const T& y, const T& radius) const
       {
-         gc_->DrawEllipse(pen_,float(x - radius),float(y - radius),float(2.0f * radius),float(2.0f * radius));
+         gc_->DrawEllipse
+               (
+                 pen_,
+                 float(   x - radius), float(   y - radius),
+                 float(2.0f * radius), float(2.0f * radius)
+               );
       }
 
       inline void draw_circle(const point2d<T> center, const T& radius) const
@@ -188,6 +202,12 @@ namespace wykobi
          {
             draw_segment(point_list[i],point_list[i+1]);
          }
+      }
+
+      inline void draw_crosshair(const point2d<T>& p, const T r) const
+      {
+         draw_segment(p.x - r, p.y, p.x + r, p.y);
+         draw_segment(p.x, p.y - r, p.x, p.y + r);
       }
 
       inline void clear(System::Drawing::Color color) const
@@ -231,14 +251,17 @@ namespace wykobi
 
       inline void draw(const segment<T,2>& segment) const
       {
-         draw_segment(segment[0].x,segment[0].y,segment[1].x,segment[1].y);
+         draw_segment(segment[0].x, segment[0].y, segment[1].x, segment[1].y);
       }
 
       inline void draw(const triangle<T,2>& triangle) const
       {
-         draw_triangle(triangle[0].x,triangle[0].y,
-                       triangle[1].x,triangle[1].y,
-                       triangle[2].x,triangle[2].y);
+         draw_triangle
+            (
+              triangle[0].x,triangle[0].y,
+              triangle[1].x,triangle[1].y,
+              triangle[2].x,triangle[2].y
+            );
       }
 
       inline void draw(const rectangle<T>& rectangle) const
@@ -248,24 +271,30 @@ namespace wykobi
 
       inline void draw(const quadix<T,2>& quadix) const
       {
-         draw_quadix(quadix[0].x,quadix[0].y,
-                     quadix[1].x,quadix[1].y,
-                     quadix[2].x,quadix[2].y,
-                     quadix[3].x,quadix[3].y);
+         draw_quadix
+            (
+              quadix[0].x,quadix[0].y,
+              quadix[1].x,quadix[1].y,
+              quadix[2].x,quadix[2].y,
+              quadix[3].x,quadix[3].y
+            );
       }
 
       inline void draw(const circle<T>& circle) const
       {
-         draw_circle(circle.x,circle.y,circle.radius);
+         draw_circle(circle.x, circle.y, circle.radius);
       }
 
       inline void draw(const polygon<T,2>& polygon) const
       {
          if (polygon.size() < 3) return;
+
          std::size_t j = polygon.size() - 1;
+
          for (std::size_t i = 0; i < polygon.size(); ++i)
          {
-            draw_segment(polygon[i],polygon[j]);
+            draw_segment(polygon[i], polygon[j]);
+
             j = i;
          }
       }
@@ -274,7 +303,9 @@ namespace wykobi
       {
          std::vector< point2d<T> > point_list;
          point_list.reserve(point_count);
-         wykobi::generate_bezier(bezier,std::back_inserter(point_list),point_count);
+
+         wykobi::generate_bezier(bezier, std::back_inserter(point_list), point_count);
+
          draw_polyline(point_list);
       }
 
@@ -282,7 +313,9 @@ namespace wykobi
       {
          std::vector< point2d<T> > point_list;
          point_list.reserve(point_count);
-         wykobi::generate_bezier(bezier,std::back_inserter(point_list),point_count);
+
+         wykobi::generate_bezier(bezier, std::back_inserter(point_list), point_count);
+
          draw_polyline(point_list);
       }
 

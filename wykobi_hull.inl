@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -24,6 +24,7 @@
 #include <vector>
 #include <deque>
 #include <algorithm>
+
 
 namespace wykobi
 {
@@ -40,6 +41,7 @@ namespace wykobi
             if (std::distance(begin,end) <= 3)
             {
                std::copy(begin,end,out);
+               return;
             }
 
             std::vector<gs_point> point;
@@ -89,9 +91,9 @@ namespace wykobi
                   pnt_queue.push_front((*it++));
             }
 
-            for (typename std::deque<gs_point>::iterator it = pnt_queue.begin(); it != pnt_queue.end(); ++it)
+            for (typename std::deque<gs_point>::iterator itr = pnt_queue.begin(); itr != pnt_queue.end(); ++itr)
             {
-               (*out++) = make_point<T>((*it).x, (*it).y);
+               (*out++) = make_point<T>((*itr).x, (*itr).y);
             }
          }
 
@@ -129,10 +131,12 @@ namespace wykobi
                   return false;
                else if (is_equal(static_cast< const point2d<T> >(p1),static_cast< const point2d<T> >(p2)))
                   return false;
-               else if (lay_distance(static_cast< const point2d<T> >(*anchor),
-                                     static_cast< const point2d<T> >(p1)) <
-                        lay_distance(static_cast< const point2d<T> >(*anchor),
-                                     static_cast< const point2d<T> >(p2)))
+               else if (
+                         lay_distance(static_cast< const point2d<T> >(*anchor),
+                                      static_cast< const point2d<T> >(p1)) <
+                         lay_distance(static_cast< const point2d<T> >(*anchor),
+                                      static_cast< const point2d<T> >(p2))
+                       )
                   return true;
                else
                  return false;
@@ -153,9 +157,17 @@ namespace wykobi
          template <typename InputIterator, typename OutputIterator>
          convex_hull_jarvis_march(InputIterator begin, InputIterator end, OutputIterator out)
          {
+            const std::size_t point_count = std::distance(begin,end);
+
+            if (point_count <= 3)
+            {
+               std::copy(begin,end,out);
+               return;
+            }
+
             std::vector< point2d<T> >point_list;
 
-            point_list.reserve(std::distance(begin,end));
+            point_list.reserve(point_count);
 
             point2d<T> lowest_point = *begin;
 
@@ -223,11 +235,12 @@ namespace wykobi
          template <typename InputIterator, typename OutputIterator>
          convex_hull_melkman(InputIterator begin, InputIterator end, OutputIterator out)
          {
-            std::size_t point_count = std::distance(begin,end);
+            const std::size_t point_count = std::distance(begin,end);
 
             if (point_count <= 3)
             {
                std::copy(begin,end,out);
+               return;
             }
 
             std::deque< point2d<Type> > deq;
@@ -249,8 +262,10 @@ namespace wykobi
 
             for (InputIterator it = (begin + 3); it != end; ++it)
             {
-               if ((orientation(deq[deq.size() - 1],deq[deq.size() - 2],(*it)) == LeftHandSide) &&
-                   (orientation(deq[1],             deq[0],             (*it)) == LeftHandSide))
+               if (
+                    (orientation(deq[deq.size() - 1], deq[deq.size() - 2], (*it)) == LeftHandSide) &&
+                    (orientation(deq[1],              deq[0],              (*it)) == LeftHandSide)
+                  )
                {
                   continue;
                }

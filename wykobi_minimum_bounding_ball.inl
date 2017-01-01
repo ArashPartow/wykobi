@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <vector>
 #include <iterator>
+
 
 namespace wykobi
 {
@@ -43,10 +44,16 @@ namespace wykobi
 
             switch (point_count)
             {
-               case 0 : { return; } break;
-               case 1 : { circle = make_circle(*begin,T(0.0)); return; } break;
-               case 2 : { circle = make_circle(*begin,*(begin + 1)); return; } break;
-               case 3 : { circle = make_circle(*begin,*(begin + 1),*(begin + 2)); return; } break;
+               case 0 : return;
+
+               case 1 : circle = make_circle(*begin,T(0.0));
+                        return;
+
+               case 2 : circle = make_circle(*begin,*(begin + 1));
+                        return;
+
+               case 3 : circle = make_circle(*begin,*(begin + 1),*(begin + 2));
+                        return;
             }
 
             std::vector< point2d<T> > point_list;
@@ -122,7 +129,9 @@ namespace wykobi
                                                          circle<T>& circle)
          {
             std::vector< point2d<T> > convex_hull;
+
             convex_hull_graham_scan< point2d<T> >(begin,end,std::back_inserter(convex_hull));
+
             randomized_minimum_bounding_ball< point2d<T> >(convex_hull.begin(),convex_hull.end(),circle);
          }
       };
@@ -139,10 +148,16 @@ namespace wykobi
          {
             switch (std::distance(begin,end))
             {
-               case 0 : { return; } break;
-               case 1 : { circle = make_circle(*begin,T(0.0)); return; } break;
-               case 2 : { circle = make_circle(*begin,*(begin + 1)); return; } break;
-               case 3 : { circle = make_circle(*begin,*(begin + 1),*(begin + 2)); return; } break;
+               case 0 : return;
+
+               case 1 : circle = make_circle(*begin,T(0.0));
+                        return;
+
+               case 2 : circle = make_circle(*begin,*(begin + 1));
+                        return;
+
+               case 3 : circle = make_circle(*begin,*(begin + 1),*(begin + 2));
+                        return;
             }
 
             circle = degenerate_circle<T>();
@@ -155,13 +170,18 @@ namespace wykobi
                   for (InputIterator it3 = it2 + 1; it3 != end; ++it3)
                   {
                      wykobi::circle<T> current_circle = make_circle((*it1),(*it2),(*it3));
+
                      bool contains_all_points = true;
 
                      for (InputIterator n = begin; n != end; ++n)
                      {
-                        if ((n!= it1) && (n!= it2) && (n!= it3) && (!point_in_circle((*n),current_circle)))
+                        if (
+                             (n!= it1) && (n!= it2) && (n!= it3) &&
+                             (!point_in_circle((*n),current_circle))
+                           )
                         {
                            contains_all_points = false;
+
                            break;
                         }
                      }
@@ -187,7 +207,9 @@ namespace wykobi
                                                     circle<T>& circle)
          {
             std::vector< point2d<T> > convex_hull;
+
             convex_hull_graham_scan< point2d<T> >(begin,end,std::back_inserter(convex_hull));
+
             naive_minimum_bounding_ball< point2d<T> >(convex_hull.begin(),convex_hull.end(),circle);
          }
       };
@@ -204,10 +226,16 @@ namespace wykobi
          {
             switch (std::distance(begin,end))
             {
-               case 0 : { return; } break;
-               case 1 : { circle = make_circle(*begin,T(0.0)); return; } break;
-               case 2 : { circle = make_circle(*begin,*(begin + 1)); return; } break;
-               case 3 : { circle = make_circle(*begin,*(begin + 1),*(begin + 2)); return; } break;
+               case 0 : return;
+
+               case 1 : circle = make_circle(*begin, T(0.0));
+                        return;
+
+               case 2 : circle = make_circle(*begin, *(begin + 1));
+                        return;
+
+               case 3 : circle = make_circle(*begin, *(begin + 1), *(begin + 2));
+                        return;
             }
 
             point2d<T> min_x = positive_infinite_point2d<T>();
@@ -227,19 +255,17 @@ namespace wykobi
 
             T span_x   = distance(max_x,min_x);
             T span_y   = distance(max_y,min_y);
-            T max_span = -infinity<T>();
+
             point2d<T> dia1 = negative_infinite_point2d<T>();
             point2d<T> dia2 = negative_infinite_point2d<T>();
 
             if (span_x > span_y)
             {
-               max_span = span_x;
                dia1     = min_x;
                dia2     = max_x;
             }
             else
             {
-               max_span = span_y;
                dia1     = min_y;
                dia2     = max_y;
             }
@@ -260,9 +286,12 @@ namespace wykobi
                   radius_sqr    = sqr(circle.radius);
                   T difference  = dist - circle.radius;
                   T ratio       = T(1.0) / dist;
-                  circle        = make_circle((circle.radius * circle.x + difference * current_point.x) * ratio,
-                                              (circle.radius * circle.y + difference * current_point.y) * ratio,
-                                               circle.radius);
+                  circle        = make_circle
+                                  (
+                                    (circle.radius * circle.x + difference * current_point.x) * ratio,
+                                    (circle.radius * circle.y + difference * current_point.y) * ratio,
+                                    circle.radius
+                                  );
                }
             }
          }
@@ -279,7 +308,9 @@ namespace wykobi
                                                      circle<T>& circle)
          {
             std::vector< point2d<T> > convex_hull;
+
             convex_hull_graham_scan< point2d<T> >(begin,end,std::back_inserter(convex_hull));
+
             ritter_minimum_bounding_ball< point2d<T> >(convex_hull.begin(),convex_hull.end(),circle);
          }
       };
@@ -296,9 +327,13 @@ namespace wykobi
          {
             switch (std::distance(begin,end))
             {
-               case 0 : { return; } break;
-               case 1 : { sphere = make_sphere(*begin,T(0.0)); return; } break;
-               case 2 : { sphere = make_sphere(*begin,*(begin + 1)); return; } break;
+               case 0 : return;
+
+               case 1 : sphere = make_sphere(*begin,T(0.0));
+                        return;
+
+               case 2 : sphere = make_sphere(*begin,*(begin + 1));
+                        return;
             }
 
             point3d<T> min_x = positive_infinite_point3d<T>();
@@ -311,6 +346,7 @@ namespace wykobi
             for (InputIterator it = begin; it != end; ++it)
             {
                point3d<T> current_point = *it;
+
                if (current_point.x < min_x.x) min_x = current_point;
                if (current_point.x > max_x.x) max_x = current_point;
                if (current_point.y < min_y.y) min_y = current_point;
@@ -322,6 +358,7 @@ namespace wykobi
             T span_x   = distance(max_x,min_x);
             T span_y   = distance(max_y,min_y);
             T span_z   = distance(max_z,min_z);
+
             T max_span = span_x;
 
             point3d<T> dia1 = min_x;
@@ -358,10 +395,13 @@ namespace wykobi
                   T difference  = dist - sphere.radius;
                   T ratio       = T(1.0) / dist;
 
-                  sphere = make_sphere((sphere.radius * sphere.x + difference * current_point.x) * ratio,
-                                       (sphere.radius * sphere.y + difference * current_point.y) * ratio,
-                                       (sphere.radius * sphere.z + difference * current_point.z) * ratio,
-                                       sphere.radius);
+                  sphere = make_sphere
+                           (
+                             (sphere.radius * sphere.x + difference * current_point.x) * ratio,
+                             (sphere.radius * sphere.y + difference * current_point.y) * ratio,
+                             (sphere.radius * sphere.z + difference * current_point.z) * ratio,
+                             sphere.radius
+                           );
                }
             }
          }

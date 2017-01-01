@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -22,6 +22,7 @@
 #include "wykobi_matrix.hpp"
 
 #include <algorithm>
+
 
 namespace wykobi
 {
@@ -35,9 +36,10 @@ namespace wykobi
    template <typename T, std::size_t M, std::size_t N>
    inline matrix<T,M,N>& matrix<T,M,N>::operator=(const matrix<T,M,N>& m)
    {
-      if (this == &m)
-        return *this;
+      if (this == &m) return *this;
+
       std::copy(m.dptr,m.dptr + (M * N), dptr);
+
       return *this;
    }
 
@@ -138,9 +140,8 @@ namespace wykobi
    }
 
    template <typename T>
-   inline void transpose(matrix<T,1,1>& matrix)
-   {
-   }
+   inline void transpose(matrix<T,1,1>&)
+   {}
 
    template <typename T>
    inline void transpose(matrix<T,2,2>& matrix)
@@ -212,11 +213,14 @@ namespace wykobi
       if (d != T(0.0))
       {
          matrix<T,2,2> m_;
+
          d = T(1.0) / d;
-         m_(0,0) = m(1,1) * d;
-         m_(1,1) = m(0,0) * d;
+
+         m_(0,0)  = m(1,1) * d;
+         m_(1,1)  = m(0,0) * d;
          m_(1,0) *= T(-1.0) * m(1,0) * d;
          m_(0,1) *= T(-1.0) * m(0,1) * d;
+
          return  m_;
       }
       else
@@ -309,6 +313,7 @@ namespace wykobi
    inline void eigenvalues(const matrix<T,2,2>& matrix, T& eigenvalue1, T& eigenvalue2)
    {
       T delta = sqrt<T>(sqr<T>(matrix(0,0) - matrix(1,1)) + T(4.0) * matrix(1,0) * matrix(0,1));
+
       eigenvalue1 = T(0.5) * (matrix(0,0) + matrix(1,1) + delta);
       eigenvalue2 = T(0.5) * (matrix(0,0) + matrix(1,1) - delta);
    }
@@ -320,7 +325,9 @@ namespace wykobi
    {
       T eigenvalue1;
       T eigenvalue2;
+
       eigenvalues(matrix,eigenvalue1,eigenvalue2);
+
       eigenvector1 = normalize(make_vector(T(-1.0) * matrix(1,0), matrix(0,0) - eigenvalue1));
       eigenvector2 = normalize(make_vector(T(-1.0) * matrix(1,0), matrix(0,0) - eigenvalue2));
    }

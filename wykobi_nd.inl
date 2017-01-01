@@ -4,15 +4,15 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
@@ -22,11 +22,10 @@
 #include "wykobi_nd.hpp"
 #include "wykobi_math.hpp"
 
-
-
 #include <algorithm>
 #include <iterator>
 #include <vector>
+
 
 namespace wykobi
 {
@@ -34,8 +33,8 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline bool parallel(const line<T,D>& line1, const line<T,D>& line2)
    {
-      vectornd<T,D> v1 = line1[0] - line1[1];
-      vectornd<T,D> v2 = line2[0] - line2[1];
+      const vectornd<T,D> v1 = line1[0] - line1[1];
+      const vectornd<T,D> v2 = line2[0] - line2[1];
 
       return is_equal(sqr(dot_product(v1,v2)),dot_product(v1,v1) * dot_product(v2,v2));
    }
@@ -43,8 +42,8 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline bool parallel(const segment<T,D>& segment1, const segment<T,D>& segment2)
    {
-      vectornd<T,D> v1 = segment1[0] - segment1[1];
-      vectornd<T,D> v2 = segment2[0] - segment2[1];
+      const vectornd<T,D> v1 = segment1[0] - segment1[1];
+      const vectornd<T,D> v2 = segment2[0] - segment2[1];
 
       return is_equal(sqr(dot_product(v1,v2)),dot_product(v1,v1) * dot_product(v2,v2));
    }
@@ -64,8 +63,8 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline bool collinear(const pointnd<T,D>& point1, const pointnd<T,D>& point2, const pointnd<T,D>& point3)
    {
-      vectornd<T,D> v1 = point2 - point1;
-      vectornd<T,D> v2 = point3 - point1;
+      const vectornd<T,D> v1 = point2 - point1;
+      const vectornd<T,D> v2 = point3 - point1;
 
       return is_equal(sqr(dot_product(v1,v2)),dot_product(v1,v1) * dot_product(v2,v2));
    }
@@ -82,8 +81,8 @@ namespace wykobi
 
       for (std::size_t i = 0; i < D; ++i)
       {
-         T max_v = max(segment[0][i],segment[1][i]);
-         T min_v = min(segment[0][i],segment[1][i]);
+         const T max_v = max(segment[0][i],segment[1][i]);
+         const T min_v = min(segment[0][i],segment[1][i]);
 
          if ((point[i] < min_v) || (point[i] > max_v))
          {
@@ -112,20 +111,20 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline pointnd<T,D> intersection_point(const segment<T,D>& segment1, const segment<T,D>& segment2, const T& fuzzy)
    {
-      vectornd<T,D> u = segment1[1] - segment1[0];
-      vectornd<T,D> v = segment2[1] - segment2[0];
-      vectornd<T,D> w = segment1[0] - segment2[0];
+      const vectornd<T,D> u = segment1[1] - segment1[0];
+      const vectornd<T,D> v = segment2[1] - segment2[0];
+      const vectornd<T,D> w = segment1[0] - segment2[0];
 
-      T a = dot_product(u,u);
-      T b = dot_product(u,v);
-      T c = dot_product(v,v);
-      T d = dot_product(u,w);
-      T e = dot_product(v,w);
+      const T a = dot_product(u,u);
+      const T b = dot_product(u,v);
+      const T c = dot_product(v,v);
+      const T d = dot_product(u,w);
+      const T e = dot_product(v,w);
 
-      T dt = a * c - b * b;
+      const T dt = a * c - b * b;
+
       T sd = dt;
       T td = dt;
-
       T sn = T(0.0);
       T tn = T(0.0);
 
@@ -194,7 +193,7 @@ namespace wykobi
       else
          tc = tn / td;
 
-      vectornd<T,D> dv = w + (sc * u) - (tc * v);
+      const vectornd<T,D> dv = w + (sc * u) - (tc * v);
 
       if (less_than_or_equal(dot_product(dv,dv),sqr(fuzzy)))
       {
@@ -209,23 +208,25 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline pointnd<T,D> intersection_point(const line<T,D>& line1, const line<T,D>& line2, const T& fuzzy)
    {
-      vectornd<T,D> u = line1[1] - line1[0];
-      vectornd<T,D> v = line2[1] - line2[0];
-      vectornd<T,D> w = line1[0] - line2[0];
+      const vectornd<T,D> u = line1[1] - line1[0];
+      const vectornd<T,D> v = line2[1] - line2[0];
+      const vectornd<T,D> w = line1[0] - line2[0];
 
-      T a = dot_product(u,u);
-      T b = dot_product(u,v);
-      T c = dot_product(v,v);
-      T d = dot_product(u,w);
-      T e = dot_product(v,w);
+      const T a = dot_product(u,u);
+      const T b = dot_product(u,v);
+      const T c = dot_product(v,v);
+      const T d = dot_product(u,w);
+      const T e = dot_product(v,w);
 
-      T dt = a * c - b * b;
+      const T dt = a * c - b * b;
+
       T sc = T(0.0);
       T tc = T(0.0);
 
       if (is_equal(dt,T(0.0)))
       {
          sc = T(0.0);
+
          if (b > c )
             tc = d / b;
          else
@@ -237,7 +238,7 @@ namespace wykobi
          tc = (a * e - b * d) / dt;
       }
 
-      vectornd<T,D> dv = w + (sc * u) - (tc * v);
+      const vectornd<T,D> dv = w + (sc * u) - (tc * v);
 
       if (less_than_or_equal(dot_product(dv,dv),sqr(fuzzy)))
       {
@@ -283,10 +284,12 @@ namespace wykobi
    inline T lay_distance(const pointnd<T,D>& point1, const pointnd<T,D>& point2)
    {
       T sum = T(0.0);
+
       for (std::size_t i = 0; i < D; ++i)
       {
          sum += sqr(point1[i] - point2[i]);
       }
+
       return sum;
    }
 
@@ -305,27 +308,27 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline T lay_distance(const segment<T,D>& segment1, const segment<T,D>& segment2)
    {
-      vectornd<T,D> u = segment1[1] - segment1[0];
-      vectornd<T,D> v = segment2[1] - segment2[0];
-      vectornd<T,D> w = segment1[0] - segment2[0];
+      const vectornd<T,D> u = segment1[1] - segment1[0];
+      const vectornd<T,D> v = segment2[1] - segment2[0];
+      const vectornd<T,D> w = segment1[0] - segment2[0];
 
-      T a = dot_product(u,u);
-      T b = dot_product(u,v);
-      T c = dot_product(v,v);
-      T d = dot_product(u,w);
-      T e = dot_product(v,w);
+      const T a = dot_product(u,u);
+      const T b = dot_product(u,v);
+      const T c = dot_product(v,v);
+      const T d = dot_product(u,w);
+      const T e = dot_product(v,w);
 
-      T dt = a * c - b * b;
+      const T dt = a * c - b * b;
+
       T sd = dt;
       T td = dt;
-
       T sn = T(0.0);
       T tn = T(0.0);
 
       if (is_equal(dt,T(0.0)))
       {
          sn = T(0.0);
-         sd = T(1.00);
+         sd = T(1.0);
          tn = e;
          td = c;
       }
@@ -333,6 +336,7 @@ namespace wykobi
       {
          sn = (b * e - c * d);
          tn = (a * e - b * d);
+
          if (sn < T(0.0))
          {
             sn = T(0.0);
@@ -350,6 +354,7 @@ namespace wykobi
       if (tn < T(0.0))
       {
          tn = T(0.0);
+
          if (-d < T(0.0))
             sn = T(0.0);
          else if (-d > a)
@@ -363,6 +368,7 @@ namespace wykobi
       else if (tn > td)
       {
          tn = td;
+
          if ((-d + b) < T(0.0))
             sn = T(0.0);
          else if ((-d + b) > a)
@@ -387,7 +393,7 @@ namespace wykobi
       else
          tc = tn / td;
 
-      vectornd<T,D> dv = w + (sc * u) - (tc * v);
+      const vectornd<T,D> dv = w + (sc * u) - (tc * v);
 
       return dot_product(dv,dv);
    }
@@ -395,23 +401,25 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline T lay_distance(const line<T,D>& line1, const line<T,D>& line2)
    {
-      vectornd<T,D> u = line1[1] - line1[0];
-      vectornd<T,D> v = line2[1] - line2[0];
-      vectornd<T,D> w = line1[0] - line2[0];
+      const vectornd<T,D> u = line1[1] - line1[0];
+      const vectornd<T,D> v = line2[1] - line2[0];
+      const vectornd<T,D> w = line1[0] - line2[0];
 
-      T a = dot_product(u,u);
-      T b = dot_product(u,v);
-      T c = dot_product(v,v);
-      T d = dot_product(u,w);
-      T e = dot_product(v,w);
+      const T a = dot_product(u,u);
+      const T b = dot_product(u,v);
+      const T c = dot_product(v,v);
+      const T d = dot_product(u,w);
+      const T e = dot_product(v,w);
 
-      T dt = a * c - b * b;
+      const T dt = a * c - b * b;
+
       T sc = T(0.0);
       T tc = T(0.0);
 
       if (is_equal(dt,T(0.0)))
       {
          sc = T(0.0);
+
          if (b > c )
             tc = d / b;
          else
@@ -423,7 +431,8 @@ namespace wykobi
          tc = (a * e - b * d) / dt;
       }
 
-      vectornd<T,D> dv = w + (sc * u) - (tc * v);
+      const vectornd<T,D> dv = w + (sc * u) - (tc * v);
+
       return dot_product(dv,dv);
    }
 
@@ -489,24 +498,24 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline pointnd<T,D> closest_point_on_segment_from_point(const segment<T,D>& segment, const pointnd<T,D>& point)
    {
-      vectornd<T,D> v1 = segment[1] - segment[0];
-      vectornd<T,D> v2 = point - segment[0];
+      const vectornd<T,D> v1 = segment[1] - segment[0];
+      const vectornd<T,D> v2 =      point - segment[0];
 
-      T c1 = dot_product(v1,v2);
+      const T c1 = dot_product(v1,v2);
 
       if (c1 <= T(0.0))
       {
          return segment[0];
       }
 
-      T c2 = dot_product(v1,v1);
+      const T c2 = dot_product(v1,v1);
 
       if (c2 <= c1)
       {
          return segment[1];
       }
 
-      T ratio = c1 / c2;
+      const T ratio = c1 / c2;
 
       pointnd<T,D> _point;
 
@@ -521,13 +530,14 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline pointnd<T,D> closest_point_on_line_from_point(const line<T,D>& line, const pointnd<T,D>& point)
    {
-      vectornd<T,D> v1 = line[1] - line[0];
-      vectornd<T,D> v2 = point - line[0];
+      const vectornd<T,D> v1 = line[1] - line[0];
+      const vectornd<T,D> v2 =   point - line[0];
 
-      T c1 = dot_product(v1,v2);
-      T c2 = dot_product(v1,v1);
+      const T c1 = dot_product(v1,v2);
+      const T c2 = dot_product(v1,v1);
 
-      T ratio = c1 / c2;
+      const T ratio = c1 / c2;
+
       pointnd<T,D> _point;
 
       for (std::size_t i = 0; i < D; ++i)
@@ -547,7 +557,8 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline pointnd<T,D> closest_point_on_plane_from_point(const plane<T,D>& plane, const pointnd<T,D>& point)
    {
-      T mu = dot_product(plane.normal,plane.normal) - plane.constant;
+      const T mu = dot_product(plane.normal,plane.normal) - plane.constant;
+
       if (is_equal(mu,T(0.0)))
          return point;
       else
@@ -570,8 +581,8 @@ namespace wykobi
 
       for (std::size_t i = 0; i < D; ++i)
       {
-         T max_v = max(box[0][i],box[1][i]);
-         T min_v = min(box[0][i],box[1][i]);
+         const T max_v = max(box[0][i],box[1][i]);
+         const T min_v = min(box[0][i],box[1][i]);
 
          if (_point[i] < min_v)
          {
@@ -597,6 +608,7 @@ namespace wykobi
       {
          _point[i] = source_point[i] + t * (destination_point[i] - source_point[i]);
       }
+
       return _point;
    }
 
@@ -605,13 +617,18 @@ namespace wykobi
                                      const pointnd<T,D>& destination_point,
                                      const T& distance)
    {
-      return project_point_t(source_point,destination_point,distance / wykobi::distance(source_point,destination_point));
+      return project_point_t
+             (
+               source_point,
+               destination_point,
+               distance / wykobi::distance(source_point, destination_point)
+             );
    }
 
    template <typename T, std::size_t D>
    inline pointnd<T,D> mirror(const pointnd<T,D>& point, const line<T,D>& mirror_axis)
    {
-      return project_point_t(point,closest_point_on_line_from_point(mirror_axis,point),T(2.0));
+      return project_point_t(point,closest_point_on_line_from_point(mirror_axis, point), T(2.0));
    }
 
    template <typename T, std::size_t D>
@@ -709,6 +726,7 @@ namespace wykobi
    inline segment<T,D> project_onto_axis(const pointnd<T,D>& point, const line<T,D>& axis)
    {
       wykobi::pointnd<T,D> _point = closest_point_on_line_from_point(axis,point);
+
       return make_segment(_point,_point);
    }
 
@@ -784,6 +802,9 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline segment<T,D> project_onto_axis(const polygon<T,D>& polygon, const line<T,D>& axis)
    {
+      if (polygon.size() == 0)
+         return degenerate_segmentnd<T,D>();
+
       std::vector< pointnd<T,D> > point_list;
 
       point_list.reserve(polygon.size());
@@ -803,7 +824,7 @@ namespace wykobi
    {
       return distance(triangle[0],triangle[1]) +
              distance(triangle[1],triangle[2]) +
-             distance(triangle[2],triangle[0]);
+             distance(triangle[2],triangle[0]) ;
    }
 
    template <typename T, std::size_t D>
@@ -812,7 +833,7 @@ namespace wykobi
       return distance(quadix[0],quadix[1]) +
              distance(quadix[1],quadix[2]) +
              distance(quadix[2],quadix[3]) +
-             distance(quadix[3],quadix[0]);
+             distance(quadix[3],quadix[0]) ;
    }
 
    template <typename T, std::size_t D>
@@ -832,7 +853,8 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline pointnd<T,D> generate_random_point(const segment<T,D>& segment)
    {
-      T t = generate_random_value(T(1.0));
+      const T t = generate_random_value(T(1.0));
+
       return ((1 - t) * segment[0]) + (t * segment[1]);
    }
 
@@ -848,7 +870,7 @@ namespace wykobi
          b = 1 - b;
       }
 
-      T c = (1 - a - b);
+      const T c = (1 - a - b);
 
       return (triangle[0] * a) + (triangle[1] * b) + (triangle[2] * c);
    }
@@ -856,19 +878,19 @@ namespace wykobi
    template <typename T, std::size_t D>
    inline pointnd<T,D> generate_random_point(const quadix<T,D>& quadix)
    {
-      T a = (2 * generate_random_value(T(1.0))) - 1;
-      T b = (2 * generate_random_value(T(1.0))) - 1;
+      const T a = (2 * generate_random_value(T(1.0))) - 1;
+      const T b = (2 * generate_random_value(T(1.0))) - 1;
 
-      T a1 = T(1.0) - a;
-      T a2 = T(1.0) + a;
+      const T a1 = T(1.0) - a;
+      const T a2 = T(1.0) + a;
 
-      T b1 = T(1.0) - b;
-      T b2 = T(1.0) + b;
+      const T b1 = T(1.0) - b;
+      const T b2 = T(1.0) + b;
 
-      T r1 = a1 * b1;
-      T r2 = a2 * b1;
-      T r3 = a2 * b2;
-      T r4 = a1 * b2;
+      const T r1 = a1 * b1;
+      const T r2 = a2 * b1;
+      const T r3 = a2 * b2;
+      const T r4 = a1 * b2;
 
       return ((r1 * quadix[0]) + (r2 * quadix[1]) + (r3 * quadix[2]) + (r4 * quadix[3])) * T(0.25);
    }
@@ -1287,7 +1309,9 @@ namespace wykobi
    inline vectornd<T,D> make_vector(const pointnd<T,D>& point)
    {
       vectornd<T,D> vec;
+
       for (std::size_t i = 0; i < D; ++i)  vec[i] = point[i];
+
       return vec;
    }
 
@@ -1295,8 +1319,10 @@ namespace wykobi
    inline ray<T,D> make_ray(const pointnd<T,D>& origin, const vectornd<T,D>& direction)
    {
       ray<T,D> _ray;
-      _ray.origin = origin;
+
+      _ray.origin    = origin;
       _ray.direction = direction;
+
       return _ray;
    }
 
@@ -1304,8 +1330,10 @@ namespace wykobi
    inline segment<T,D> make_segment(const pointnd<T,D>& point1, const pointnd<T,D>& point2)
    {
       segment<T,D> _segment;
+
       _segment[0] = point1;
       _segment[1] = point2;
+
       return _segment;
    }
 
@@ -1313,8 +1341,10 @@ namespace wykobi
    inline line<T,D> make_line(const pointnd<T,D>& point1, const pointnd<T,D>& point2)
    {
       line<T,D> _line;
+
       _line[0] = point1;
       _line[1] = point2;
+
       return _line;
    }
 
@@ -1322,8 +1352,10 @@ namespace wykobi
    inline box<T,D> make_box(const pointnd<T,D>& point1, const pointnd<T,D>& point2)
    {
       box<T,D> _box;
+
       _box[0] = point1;
       _box[1] = point2;
+
       return _box;
    }
 
@@ -1331,9 +1363,11 @@ namespace wykobi
    inline triangle<T,D> make_triangle(const pointnd<T,D>& point1, const pointnd<T,D>& point2, const pointnd<T,D>& point3)
    {
       triangle<T,D> _triangle;
+
       _triangle[0] = point1;
       _triangle[1] = point2;
       _triangle[2] = point3;
+
       return _triangle;
    }
 
@@ -1341,10 +1375,12 @@ namespace wykobi
    inline quadix<T,D> make_quadix(const pointnd<T,D>& point1, const pointnd<T,D>& point2, const pointnd<T,D>& point3, const pointnd<T,D>& point4)
    {
       quadix<T,D> _quadix;
+
       _quadix[0] = point1;
       _quadix[1] = point2;
       _quadix[2] = point3;
       _quadix[3] = point4;
+
       return _quadix;
    }
 
@@ -1352,8 +1388,10 @@ namespace wykobi
    inline hypersphere<T,D> make_sphere(const pointnd<T,D>& point, const T& radius)
    {
       hypersphere<T,D> sphere;
+
       sphere.center = point;
       sphere.radius = radius;
+
       return sphere;
    }
 
@@ -1361,8 +1399,10 @@ namespace wykobi
    inline hypersphere<T,D> make_sphere(const pointnd<T,D>& point1, const pointnd<T,D>& point2)
    {
       hypersphere<T,D> sphere;
+
       sphere.center = (point1 + point2) * T(0.5);
       sphere.radius = distance(point1,point2) * T(0.5);
+
       return sphere;
    }
 

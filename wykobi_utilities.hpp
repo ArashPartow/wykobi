@@ -4,21 +4,23 @@
 (* Wykobi Computational Geometry Library                               *)
 (* Release Version 0.0.5                                               *)
 (* http://www.wykobi.com                                               *)
-(* Copyright (c) 2005-2016 Arash Partow, All Rights Reserved.          *)
+(* Copyright (c) 2005-2017 Arash Partow, All Rights Reserved.          *)
 (*                                                                     *)
 (* The Wykobi computational geometry library and its components are    *)
-(* supplied under the terms of the General Wykobi License agreement.   *)
+(* supplied under the terms of the open source MIT License.            *)
 (* The contents of the Wykobi computational geometry library and its   *)
 (* components may not be copied or disclosed except in accordance with *)
-(* the terms of that agreement.                                        *)
+(* the terms of the MIT License.                                       *)
 (*                                                                     *)
-(* URL: http://www.wykobi.com/license.html                             *)
+(* URL: https://opensource.org/licenses/MIT                            *)
 (*                                                                     *)
 (***********************************************************************)
 */
 
+
 #ifndef INCLUDE_WYKOBI_UTILTIIES
 #define INCLUDE_WYKOBI_UTILTIIES
+
 
 #include <iostream>
 #include <iomanip>
@@ -191,6 +193,7 @@ namespace wykobi
          << std::showpoint
          << std::setprecision(10)
          << "(" << circle.x << "," << circle.y << "," << circle.radius << ")";
+
       return os;
    }
 
@@ -201,6 +204,7 @@ namespace wykobi
          << std::showpoint
          << std::setprecision(6)
          << "(" << sphere.x << "," << sphere.y << "," << sphere.z << "," << sphere.radius << ")";
+
       return os;
    }
 
@@ -218,29 +222,6 @@ namespace wykobi
       }
 
       return os;
-   }
-
-   inline void finalize_trigonometry_tables()
-   {
-      delete[] sin_table;
-      delete[] cos_table;
-      delete[] tan_table;
-   }
-
-   inline void initialize_trigonometry_tables()
-   {
-      finalize_trigonometry_tables();
-
-      sin_table = new Float[TrigTableSize];
-      cos_table = new Float[TrigTableSize];
-      tan_table = new Float[TrigTableSize];
-
-      for (unsigned int i = 0; i < TrigTableSize; ++i)
-      {
-         sin_table[i] = Float(std::sin((1.0 * i) * PIDiv180));
-         cos_table[i] = Float(std::cos((1.0 * i) * PIDiv180));
-         tan_table[i] = Float(std::tan((1.0 * i) * PIDiv180));
-      }
    }
 
 } // namespace wykobi
