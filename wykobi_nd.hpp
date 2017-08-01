@@ -242,6 +242,12 @@ namespace wykobi
    inline pointnd<T,D> operator*(const T& scale, const pointnd<T,D>& point);
 
    template <typename T, std::size_t D>
+   inline vectornd<T,D> operator/(const vectornd<T,D>& v1, const T& scale);
+
+   template <typename T, std::size_t D>
+   inline pointnd<T,D> operator/(const pointnd<T,D>& point, const T& scale);
+
+   template <typename T, std::size_t D>
    inline pointnd<T,D> operator+(const pointnd<T,D>& point, const vectornd<T,D>& v);
 
    template <typename T, std::size_t D>

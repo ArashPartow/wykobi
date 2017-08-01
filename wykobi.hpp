@@ -226,7 +226,7 @@ namespace wykobi
       inline reference       operator[](const std::size_t& index)       { return v[index]; }
       inline const_reference operator[](const std::size_t& index) const { return v[index]; }
 
-   private:
+   protected:
       T v[D];
    };
 
@@ -653,6 +653,7 @@ namespace wykobi
       }
 
       vectornd(const vectornd<T,D>& vec)
+      : pointnd<T,D>()
       {
          for (std::size_t i = 0; i < D; ++i) (*this)[i] = vec[i];
       }
@@ -3574,6 +3575,9 @@ namespace wykobi
    template <typename T> inline vector3d<T> operator*(const vector3d<T>& v1, const T& scale);
    template <typename T> inline vector2d<T> operator*(const T& scale, const vector2d<T>& v1);
    template <typename T> inline vector3d<T> operator*(const T& scale, const vector3d<T>& v1);
+
+   template <typename T> inline vector2d<T> operator/(const vector2d<T>& v1, const T& scale);
+   template <typename T> inline vector3d<T> operator/(const vector3d<T>& v1, const T& scale);
 
    template <typename T> inline point2d<T> operator*(const point2d<T>& point, const T& scale);
    template <typename T> inline point3d<T> operator*(const point3d<T>& point, const T& scale);

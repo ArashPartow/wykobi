@@ -13729,11 +13729,15 @@ namespace wykobi
 
       for (std::size_t i = 1; i < wykobi::quadix<T,2>::PointCount; ++i)
       {
-              if (quadix[i].x < rectangle_[0].x) rectangle_[0].x = quadix[i].x;
-         else if (quadix[i].x > rectangle_[1].x) rectangle_[1].x = quadix[i].x;
+         if (quadix[i].x < rectangle_[0].x)
+            rectangle_[0].x = quadix[i].x;
+         else if (quadix[i].x > rectangle_[1].x)
+            rectangle_[1].x = quadix[i].x;
 
-              if (quadix[i].y < rectangle_[0].y) rectangle_[0].y = quadix[i].y;
-         else if (quadix[i].y > rectangle_[1].y) rectangle_[1].y = quadix[i].y;
+         if (quadix[i].y < rectangle_[0].y)
+            rectangle_[0].y = quadix[i].y;
+         else if (quadix[i].y > rectangle_[1].y)
+            rectangle_[1].y = quadix[i].y;
       }
 
       return rectangle_;
@@ -13760,11 +13764,15 @@ namespace wykobi
 
       for (std::size_t i = 0; i < polygon.size(); ++i)
       {
-              if (polygon[i].x < rectangle_[0].x) rectangle_[0].x = polygon[i].x;
-         else if (polygon[i].x > rectangle_[1].x) rectangle_[1].x = polygon[i].x;
+         if (polygon[i].x < rectangle_[0].x)
+            rectangle_[0].x = polygon[i].x;
+         else if (polygon[i].x > rectangle_[1].x)
+            rectangle_[1].x = polygon[i].x;
 
-              if (polygon[i].y < rectangle_[0].y) rectangle_[0].y = polygon[i].y;
-         else if (polygon[i].y > rectangle_[1].y) rectangle_[1].y = polygon[i].y;
+         if (polygon[i].y < rectangle_[0].y)
+            rectangle_[0].y = polygon[i].y;
+         else if (polygon[i].y > rectangle_[1].y)
+            rectangle_[1].y = polygon[i].y;
       }
 
       return rectangle_;
@@ -13891,14 +13899,20 @@ namespace wykobi
 
       for (std::size_t i = 1; i < wykobi::triangle<T,3>::PointCount; ++i)
       {
-              if (triangle[i].x < box_[0].x) box_[0].x = triangle[i].x;
-         else if (triangle[i].x > box_[1].x) box_[1].x = triangle[i].x;
+         if (triangle[i].x < box_[0].x)
+            box_[0].x = triangle[i].x;
+         else if (triangle[i].x > box_[1].x)
+            box_[1].x = triangle[i].x;
 
-              if (triangle[i].y < box_[0].y) box_[0].y = triangle[i].y;
-         else if (triangle[i].y > box_[1].y) box_[1].y = triangle[i].y;
+         if (triangle[i].y < box_[0].y)
+            box_[0].y = triangle[i].y;
+         else if (triangle[i].y > box_[1].y)
+            box_[1].y = triangle[i].y;
 
-              if (triangle[i].z < box_[0].z) box_[0].z = triangle[i].z;
-         else if (triangle[i].z > box_[1].z) box_[1].z = triangle[i].z;
+         if (triangle[i].z < box_[0].z)
+            box_[0].z = triangle[i].z;
+         else if (triangle[i].z > box_[1].z)
+            box_[1].z = triangle[i].z;
       }
 
       return box_;
@@ -13933,14 +13947,20 @@ namespace wykobi
 
       for (std::size_t i = 1; i < wykobi::quadix<T,3>::PointCount; ++i)
       {
-              if (quadix[i].x < box_[0].x) box_[0].x = quadix[i].x;
-         else if (quadix[i].x > box_[1].x) box_[1].x = quadix[i].x;
+         if (quadix[i].x < box_[0].x)
+            box_[0].x = quadix[i].x;
+         else if (quadix[i].x > box_[1].x)
+            box_[1].x = quadix[i].x;
 
-              if (quadix[i].y < box_[0].y) box_[0].y = quadix[i].y;
-         else if (quadix[i].y > box_[1].y) box_[1].y = quadix[i].y;
+         if (quadix[i].y < box_[0].y)
+            box_[0].y = quadix[i].y;
+         else if (quadix[i].y > box_[1].y)
+            box_[1].y = quadix[i].y;
 
-              if (quadix[i].z < box_[0].z) box_[0].z = quadix[i].z;
-         else if (quadix[i].z > box_[1].z) box_[1].z = quadix[i].z;
+         if (quadix[i].z < box_[0].z)
+            box_[0].z = quadix[i].z;
+         else if (quadix[i].z > box_[1].z)
+            box_[1].z = quadix[i].z;
       }
 
       return box_;
@@ -13967,14 +13987,20 @@ namespace wykobi
 
       for (std::size_t i = 1; i < polygon.size(); ++i)
       {
-              if (polygon[i].x < box_[0].x) box_[0].x = polygon[i].x;
-         else if (polygon[i].x > box_[1].x) box_[1].x = polygon[i].x;
+         if (polygon[i].x < box_[0].x)
+            box_[0].x = polygon[i].x;
+         else if (polygon[i].x > box_[1].x)
+            box_[1].x = polygon[i].x;
 
-              if (polygon[i].y < box_[0].y) box_[0].y = polygon[i].y;
-         else if (polygon[i].y > box_[1].y) box_[1].y = polygon[i].y;
+         if (polygon[i].y < box_[0].y)
+            box_[0].y = polygon[i].y;
+         else if (polygon[i].y > box_[1].y)
+            box_[1].y = polygon[i].y;
 
-              if (polygon[i].z < box_[0].z) box_[0].z = polygon[i].z;
-         else if (polygon[i].z > box_[1].z) box_[1].z = polygon[i].z;
+         if (polygon[i].z < box_[0].z)
+            box_[0].z = polygon[i].z;
+         else if (polygon[i].z > box_[1].z)
+            box_[1].z = polygon[i].z;
       }
 
       return box_;
@@ -14741,6 +14767,29 @@ namespace wykobi
       v_.x = v.x * scale;
       v_.y = v.y * scale;
       v_.z = v.z * scale;
+
+      return v_;
+   }
+
+   template <typename T>
+   inline vector2d<T> operator/(const vector2d<T>& v, const T& scale)
+   {
+      vector2d<T> v_;
+
+      v_.x = v.x / scale;
+      v_.y = v.y / scale;
+
+      return v_;
+   }
+
+   template <typename T>
+   inline vector3d<T> operator/(const vector3d<T>& v, const T& scale)
+   {
+      vector3d<T> v_;
+
+      v_.x = v.x / scale;
+      v_.y = v.y / scale;
+      v_.z = v.z / scale;
 
       return v_;
    }
