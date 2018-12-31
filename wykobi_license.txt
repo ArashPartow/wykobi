@@ -1,6 +1,6 @@
 Wykobi Computational Geometry Library
 http://www.wykobi.com
-Copyright (c) 2005-2017 Arash Partow,  All Rights Reserved.
+Copyright (c) 2005-2019 Arash Partow,  All Rights Reserved.
 
 The  Wykobi  computational  geometry library  and  its  components are
 supplied under the terms of the Open Source MIT License. The  contents
@@ -16,7 +16,7 @@ URL: https://opensource.org/licenses/MIT
 
 Wykobi Computational Geometry Library
 http://www.wykobi.com
-Copyright (c) 2005-2017 Arash Partow
+Copyright (c) 2005-2019 Arash Partow
 
 Permission is hereby granted, free of charge, to any person  obtaining
 a  copy  of  this software  and  associated  documentation files  (the
