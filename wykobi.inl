@@ -2092,7 +2092,15 @@ namespace wykobi
    template <typename T>
    inline point2d<T> intersection_point(const segment<T,2>& segment, const line<T,2>& line)
    {
-      return intersection_point
+    if (perpendicular(line, segment)) {
+          point2d<T> p = closest_point_on_line_from_point(line, segment[0]);
+          if (point_on_segment(p, segment)) {
+            return p;
+          } else {
+            return point2d<T>(+infinity<T>(), +infinity<T>());
+          }
+     } else {
+             return intersection_point
              (
                segment,
                make_segment
@@ -2101,12 +2109,21 @@ namespace wykobi
                  closest_point_on_line_from_point(line, segment[1])
                )
              );
+     }
    }
 
    template <typename T>
    inline point3d<T> intersection_point(const segment<T,3>& segment,
                                         const line<T,3>& line, const T& fuzzy)
    {
+     if (perpendicular(line, segment)) {
+       point3d<T> p = closest_point_on_line_from_point(line, segment[0]);
+       if (point_on_segment(p, segment)) {
+         return p;
+       } else {
+         return point3d<T>(+infinity<T>(), +infinity<T>(), +infinity<T>());
+       }
+     } else {
       return intersection_point
              (
                segment,
@@ -2117,6 +2134,7 @@ namespace wykobi
                ),
                fuzzy
              );
+     }
    }
 
    template <typename T>
@@ -3547,6 +3565,19 @@ namespace wykobi
              (
                segment1[0], segment1[1],
                segment2[0], segment2[1],
+               epsilon
+             );
+   }
+
+   template <typename T>
+   inline bool perpendicular(const line<T,3>& line,
+                             const segment<T,3>& segment,
+                             const T& epsilon)
+   {
+      return perpendicular
+             (
+               line[0], line[1],
+               segment[0], segment[1],
                epsilon
              );
    }

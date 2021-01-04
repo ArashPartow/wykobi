@@ -1571,6 +1571,11 @@ namespace wykobi
                              const T& epsilon = T(Epsilon));
 
    template <typename T>
+   inline bool perpendicular(const line<T,3>& line,
+                             const segment<T,3>& segment,
+                             const T& epsilon = T(Epsilon));
+
+   template <typename T>
    inline bool perpendicular(const line<T,3>& line1,
                              const line<T,3>& line2,
                              const T& epsilon = T(Epsilon));
