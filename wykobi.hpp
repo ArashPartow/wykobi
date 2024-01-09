@@ -785,6 +785,9 @@ namespace wykobi
       const static unsigned int TableSize = 360;
 
       trig_luts()
+      : sin_(TableSize),
+        cos_(TableSize),
+        tan_(TableSize)
       {
          for (std::size_t i = 0; i < 360; ++i)
          {
